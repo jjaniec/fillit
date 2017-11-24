@@ -5,9 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD:testinput.c
 /*   Created: 2017/11/24 21:08:35 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/24 22:28:13 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/11/24 22:34:47 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +27,12 @@ int 	ft_a(char *buf, int len)
 	while (++i < len)
 	{
 		while (buf[i] == '.' || buf[i] == '#')
+		{
+			i++;
 			j++;
-		if (!(j == 16))
-			write(1, "error", 6);
+		}
+		if (j != 16)
+			write(1, "error\n", 6);
 	}
 	return (len);
 }
@@ -47,12 +49,5 @@ int 	main()
 	ft_a(buf, len);
 
 	close(fd);
+	return (0);
 }
-=======
-/*   Created: 2017/11/24 21:52:08 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/24 22:01:45 by unicolai         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-ffffffffffff
->>>>>>> e5fd384b8a20abd210913b639cbb5ea2d1a57385:u.c
