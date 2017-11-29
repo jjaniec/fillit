@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/29 16:37:52 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:45:54 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,8 @@ typedef struct	s_tetri
 }				t_tetri;
 char			*ft_read_content(int fd);
 char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_parse_tetri(char *s, int nb);
+int				ft_errorhashtag(char *s);
+int				ft_errordot(char *s);
+void			ft_putstr_fd(char *s, int fd);
 #endif

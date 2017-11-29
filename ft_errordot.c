@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:10:04 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/28 15:32:42 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:35:15 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,8 @@ int	ft_errordot(char *s)
 	while (s[i] != '\0')
 	{
 		if ((i + 1) % 5 == 0 && s[i] != '\n')
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1);
-}
-#include <stdio.h>
-int main()
-{
-	char *s = "...#\n...#\n.#..\n...#\n";
-
-	printf("%s\n%d\n", s, ft_errordot(s));
-	return 0;
+	return (0);
 }
