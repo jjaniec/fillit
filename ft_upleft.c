@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:00:08 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/29 21:25:02 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/11/29 21:58:06 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_up(char *s, int i, int first)
 	while (s[i] != '#')
 		i++;
 	first = 0;
-	while (i - 5 > 0)
+	while (i - 5 >= 0)
 	{
 		first++;
 		i -= 5;
