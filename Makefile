@@ -6,7 +6,7 @@
 #    By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 17:05:25 by jjaniec           #+#    #+#              #
-#    Updated: 2017/11/29 21:08:25 by unicolai         ###   ########.fr        #
+#    Updated: 2017/11/29 23:20:21 by unicolai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEAD = fillit.h
 
 SRCS = ft_read_content.c\
 	   ft_parse_tetri.c\
-	   ft_distribute_terminos.c\
+	   ft_distribute_tetriminos.c\
 	   ft_errordot.c\
 	   ft_errorhashtag.c\
 	   main.c
@@ -29,8 +29,7 @@ all: $(NAME)
 
 $(NAME):
 	gcc $(CFLAGS) -I $(HEAD) -c $(SRCS)
-	$(MAKE) -C ./libft
-	gcc $(CFLAGS) -o $(NAME) $(OBJ) -I $(HEAD)
+	gcc $(CFLAGS) $(OBJ) -L libft/ -lft -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
