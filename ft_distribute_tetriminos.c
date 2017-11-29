@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 18:24:56 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/29 21:24:46 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/11/29 21:50:39 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_distribute_tetriminos(t_tetri **tab, char *s)
 		{
 			(*tab)[i - 1].s = ft_parse_tetri(s, i);
 			ft_upleft((*tab)[i - 1].s);
-			printf("Struct %d -> \n|%s|", i-1, (*tab)[i - 1].s);
+			printf("Struct %d -> |\n%s|", i-1, (*tab)[i - 1].s);
 		}
 		else if (!(ft_errordot(ft_parse_tetri(s, i)) == 0 && ft_errorhashtag(ft_parse_tetri(s, i)) == 0))
 		{
