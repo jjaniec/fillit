@@ -6,13 +6,13 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 19:00:08 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/29 13:14:43 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/11/29 21:25:02 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "fillit.h"
 
-void	left(char *s, int i, int first)
+void	ft_left(char *s, int i, int first)
 {
 	while (s[i])
 	{
@@ -32,7 +32,7 @@ void	left(char *s, int i, int first)
 	}
 }
 
-void	up(char *s, int i, int first)
+void	ft_up(char *s, int i, int first)
 {
 	while (s[i] != '#')
 		i++;
@@ -54,18 +54,8 @@ void	up(char *s, int i, int first)
 	}
 }
 
-void	upleft(char *s)
+void	ft_upleft(char *s)
 {
-	left(s, 0, 5);
-	up(s, 0, 0);
+	ft_left(s, 0, 5);
+	ft_up(s, 0, 0);
 }
-
-int main()
-{
-	char	s[30] = "....\n....\n...#\n.###\n";
-	printf("%s\n", s);
-	upleft(s);
-	printf("%s\n", s);
-	return 0;
-}
-
