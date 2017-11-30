@@ -27,10 +27,21 @@ typedef struct	s_tetri
 	int		y;
 	char	*s;
 }				t_tetri;
+
 char			*ft_read_content(int fd);
+
 char			*ft_strjoin(char const *s1, char const *s2);
+
 char			*ft_parse_tetri(char *s, int nb);
+
 int				ft_errorhashtag(char *s);
+
 int				ft_errordot(char *s);
+
 int				ft_distribute_tetriminos(t_tetri **tab, char *s);
+
+void			ft_putstr_fd(char *s, int fd);
+
+void			ft_upleft(char *s);
+
 #endif
