@@ -6,13 +6,11 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:47:50 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/29 19:46:29 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/11/30 15:12:11 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-char	*ft_strsub(char *s, int a, int b);
 
 char	*ft_parse_tetri(char *s, int nb)
 {
