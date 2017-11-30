@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 18:24:56 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/29 21:50:39 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/11/29 23:11:45 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,4 @@ int		ft_distribute_tetriminos(t_tetri **tab, char *s)
 		i++;
 	}
 	return (0);
-}
-
-int		main()
-{
-	int		fd;
-	char	*s;
-	t_tetri		*tab;
-
-	fd = open("map.fillit", O_RDONLY);
-	s = ft_read_content(fd);
-	if (ft_distribute_tetriminos(&tab, s) == 1)
-		return (1);
 }

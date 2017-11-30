@@ -6,29 +6,35 @@
 #    By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 17:05:25 by jjaniec           #+#    #+#              #
-#    Updated: 2017/11/29 21:18:57 by jjaniec          ###   ########.fr        #
+#    Updated: 2017/11/29 23:20:21 by unicolai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS= -Wall -Werror -Wextra
-NOFLAGS=
+NAME = fillit
 
-all:
-	make -C libft/ fclean && make -C libft/
-	clang $(NOFLAGS) -I libft/ -o ft_read_content.o -c ft_read_content.c
-	clang $(NOFLAGS) -I libft/ -o ft_parse_tetri.o -c ft_parse_tetri.c
-	clang $(NOFLAGS) -I libft/ -o ft_distribute_tetriminos.o -c ft_distribute_tetriminos.c
-	clang $(NOFLAGS) -I libft/ -o ft_errordot.o -c ft_errordot.c
-	clang $(NOFLAGS) -I libft/ -o ft_errorhashtag.o -c ft_errorhashtag.c
-	clang $(NOFLAGS) -I libft/ -o ft_upleft.o -c ft_upleft.c
+CFLAGS = -Wall -Werror -Wextra
 
-#	clang $(NOFLAGS) -I libft/ -o main.o -c main.c
-	clang -o fillit ft_read_content.o ft_parse_tetri.o ft_distribute_tetriminos.o ft_errordot.o ft_errorhashtag.o ft_upleft.o -I libft/ -L libft/ -lft
+HEAD = fillit.h
+
+SRCS = ft_read_content.c\
+	   ft_parse_tetri.c\
+	   ft_distribute_tetriminos.c\
+	   ft_errordot.c\
+	   ft_errorhashtag.c\
+	   main.c
+
+OBJ = $(SRCS:.c=.o)
+
+all: $(NAME)
+
+$(NAME):
+	gcc $(CFLAGS) -I $(HEAD) -c $(SRCS)
+	gcc $(CFLAGS) $(OBJ) -L libft/ -lft -o $(NAME)
 
 clean:
-	rm ./*.o
+	rm -rf $(OBJ)
 
-fclean:
-	rm fillit
+fclean: clean
+	rm -rf $(NAME)
 
-re: fclean all clean
+re: fclean all
