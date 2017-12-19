@@ -1,79 +1,69 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map_copy.c                                      :+:      :+:    :+:   */
+/*   ft_map_copy_.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/09 19:13:33 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/12 16:14:16 by jjaniec          ###   ########.fr       */
+/*   Created: 2017/12/19 15:07:13 by jjaniec           #+#    #+#             */
+/*   Updated: 2017/12/19 18:56:32 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "./fillit.h"
 
-/*
-** Tries to copy tetri in a copy of map to know if it is possible
-*/
+char	*ft_generate_map(int x);
 
-int		ft_can_copy(char **map, int offset_x, int offset_y, char *tetri)
+void	ft_map_copy(char **map, t_tetri *t)
 {
-	char	*tmp;
+	int		i;
 
-	tmp = ft_strdup(*map);
-	if (ft_map_copy(&tmp, offset_x, offset_y, tetri) != 1)
-		return (ft_map_copy(&tmp, offset_x, offset_y, tetri));
-	return (0);
+	i = 0;
+	while ((*map)[i] && t->s[i])
+	{
+		(*map)[i] = t->s[i];
+		i++;
+	}
 }
 
-/*
-** Copies in $map, $tetri, starting at $map[$offset_y][$offset_x]
-** The function returns 0 if copy was successful or 1 if tetriminos is 
-** incomplete in $map
-*/
-
-int		ft_map_copy(char **map, int offset_x, int offset_y, char *tetri)
+char	*ft_resize_tetri(t_tetri *t, size_t size)
 {
-	int		width;
+	char	*new_t;
 	int		i;
 	int		j;
 
+	new_t = ft_generate_map(size);
 	i = 0;
 	j = 0;
-	width = 0;
-	while ((*map)[width] && (*map)[width] != '\n')
-		width += 1;
-	width += 1;
-	while (tetri[i] && (*map)[(width * offset_y) + offset_x + j])
+	while (t->s[i] && new_t[j])
 	{
-		if (tetri[i] != '\n' && tetri[i] && tetri[i] >= 'A' && tetri[i] <= 'Z')
+		while (t->s[i] != '\n')
 		{
-			if ((*map)[(offset_y * width) + offset_x + j] != '.')
-				return (((*map)[(width * offset_y) + offset_x + j] == '\n') \
-						? (2) : (1));
-			(*map)[(offset_y * width) + offset_x + j] = tetri[i];
-			j += 1;
+			if (new_t[j] == '.')
+				new_t[j] = t->s[i];
+			i++;
+			j++;
 		}
-		if (tetri[i] == '\n')
-		{
-			j = 0;
-			offset_y += 1;
-		}
+		while (new_t[j] != '\n')
+			j++;
 		i++;
+		j++;
 	}
-	return (0);
+	return (new_t);
 }
-
 
 int		main()
 {
-	char	*m;
-	char	*t;
+	char *m;
+	t_tetri t;
 
-	m = ft_create_map(5);
-	t = "AA..\nA...\nA...\n....\n";
-	printf("%d - ", ft_map_copy(&m, 0, 0, t));
-	printf("\n%s|\n", m);
-	printf("%d - ", ft_can_copy(&m, 0, 0, t));
-	printf("\n%s|\n", m);
+	t.s = "AE..\n..TT\nR...\n....\n";
+	t.x = 1;
+	t.y = 1;
+	m = ft_generate_map(8);
+	t.s = ft_resize_tetri(&t, 8);
+	ft_map_copy(&m, &t);
+	printf("new_t\n%s", t.s);
+	printf("aaaaa\n%s", m);
+	return (0);
 }
