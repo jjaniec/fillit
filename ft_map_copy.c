@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 15:07:13 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 17:52:58 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 18:02:25 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ unsigned int	ft_get_map_size(char *m)
 ** Tries to copy tetriminos $t and return 1 or 0 based on ft_map_copy return
 */
 
-int		ft_can_copy(char **map, t_tetri *t)
+int				ft_can_copy(char **map, t_tetri *t)
 {
 	char	*tmp;
 
@@ -48,7 +48,7 @@ int		ft_can_copy(char **map, t_tetri *t)
 ** Copy tetriminos on map, if copy failed, returns 1, otherwise returns 0
 */
 
-int		ft_map_copy(char **map, t_tetri *t)
+int				ft_map_copy(char **map, t_tetri *t)
 {
 	int		i;
 	int		j;
@@ -69,11 +69,8 @@ int		ft_map_copy(char **map, t_tetri *t)
 		{
 			if ((*map)[i] != '.')
 				return (1);
-			else if ((*map)[i] == '.')
-			{
+			else if ((*map)[i] == '.' && (w += 1))
 				(*map)[i] = t->s[j];
-				w += 1;
-			}
 		}
 		i++;
 		j++;
@@ -85,7 +82,7 @@ int		ft_map_copy(char **map, t_tetri *t)
 ** Resize tetriminos's 'map' to $size
 */
 
-char	*ft_resize_tetri(t_tetri *t, size_t size)
+char			*ft_resize_tetri(t_tetri *t, size_t size)
 {
 	char	*new_t;
 	int		i;
@@ -109,29 +106,4 @@ char	*ft_resize_tetri(t_tetri *t, size_t size)
 		j++;
 	}
 	return (new_t);
-}
-
-int		main()
-{
-	char *m;
-	t_tetri t;
-	t_tetri t2;
-
-	t.s = "AA..\n.AA.\n....\n....\n";
-	t.x = 0;
-	t.y = 0;
-	t2.s = "BBB.\nB...\n....\n....\n";
-	t2.x = 1;
-	t2.y = 2;
-	m = ft_generate_map(7);
-	t.s = ft_resize_tetri(&t, ft_get_map_size(m));
-	printf("%d", ft_map_copy(&m, &t));
-	printf("new_t\n%s", t.s);
-	printf("aaaaa\n%s", m);
-
-	t2.s = ft_resize_tetri(&t2, ft_get_map_size(m));
-	printf("%d", ft_map_copy(&m, &t2));
-	printf("new_t\n%s", t2.s);
-	printf("aaaaa\n%s", m);
-	return (0);
 }
