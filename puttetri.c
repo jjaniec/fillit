@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 15:41:55 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/20 18:37:26 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/20 22:56:50 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ void	ft_backtrack(char *map, t_tetri *tabtetri)
 	int		i;
 	int		j;
 	int		k;
+	int		l;
 	int		nbl;
 	int		result;
 	int		firststar;
 	int		onemore;
 	int		marquer;
+	int		nexthashtag;
+	int		returnligne;
 
 	j = 0;
 	onemore = 0;
@@ -73,11 +76,32 @@ void	ft_backtrack(char *map, t_tetri *tabtetri)
 		//printf("map[%d] = %c\n", i, map[i]);
 		while (tabtetri[j].s[k] != '\0' && result == SUCCESS && map[i] != '\0') // Analyse chaque char du tetri
 		{
-			nbl = nbligne(map);
+			nbl = nbligne(map) + 1;
+			nexthashtag = 0;
+			l = k;
+			returnligne = 0;
+//			if (tabtetri[j].s[k] == '#' && tabtetri[j].s[k-1] != '#')
+//			{
+//				l++;
+//				nexthashtag = 1 - nbl;
+//				printf("-->>%c, nh : %d\n", tabtetri[j].s[l], nexthashtag);
+//				while (tabtetri[j].s[l] != '#' && returnligne != 1 && tabtetri[j].s[l] != '\0')
+//				{
+//					if (tabtetri[j].s[l] == '\n')
+//						returnligne = 1;
+//					printf("-->%c, nh : %d\n", tabtetri[j].s[l], nexthashtag);
+//					nexthashtag++;
+//					l++;
+//				}
+//			}
+			if (tabtetri[j].s[k] == '#')
+			{
+				printf("nexthashtag: %d\n", nexthashtag);
+				printf("i: %d, i modulo nbl: %d\n", i, i % nbl);
+				printf("marquer: %d de j, k %d, %d\n", marquer, j, k);
+			}
 			if (tabtetri[j].s[k] == '#' && tabtetri[j].s[k - 1] != '#')
-				marquer = i % nbl;
-			printf("i: %d, i modulo nbl: %d\n", i, i % nbl);
-			printf("marquer: %d de j, k %d, %d\n", marquer, j, k);
+				marquer = (i % nbl) - (k % 5);
 			if (tabtetri[j].s[k] == '#' && map[i] == '.') // Si la place est disponible pour placer un bout de la piece du tetri
 				map[i] = '*';
 			else if (tabtetri[j].s[k] == '#' && map[i] != '.') // Si la place n'est pas disponible
@@ -146,17 +170,17 @@ int				main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	char map[300] = "......\n......\n......\n......\n......\n";
+	char map[300] = "......\n......\n......\n......\n......\n......\n";
 	t_tetri t1;
 	t_tetri t2;
 	t_tetri t3;
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t1.s = "##..\n.##.\n....\n....\n....\n";
+	t4.s = "..#.\n###.\n....\n....\n....\n";
 	t2.s = "##...\n.##.\n....\n....\n....\n";
 	t3.s = "#...\n#...\n#...\n#...\n....\n";
-	t4.s = ".#..\n###.\n....\n....\n....\n";
+	t1.s = ".#...\n###.\n....\n....\n....\n";
 	t1.x = 0;
 	t1.y = 0;
 	t2.x = 0;
