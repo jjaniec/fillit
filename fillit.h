@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/18 22:59:23 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/20 19:32:21 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,17 @@ int				ft_distribute_tetriminos(t_tetri **tab, char *s);
 void			ft_putstr_fd(char const *s, int fd);
 
 void			ft_upleft(char *s);
+
+char			*ft_generate_map(unsigned int width);
+
+int				ft_can_copy(char **map, t_tetri *t);
+
+int				ft_map_copy(char **map, t_tetri *t);
+
+char			*ft_resize_tetri(t_tetri *t, size_t size);
+
+unsigned int	ft_get_map_size(char *m);
+
+int				ft_count_tetris(char *file_content);
 
 #endif
