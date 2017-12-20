@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/30 15:12:57 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/18 22:59:23 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <strings.h>
-# include "libft/libft.h"
+//# include "libft/libft.h"
 
 # define BUFF_SIZE 21
 
