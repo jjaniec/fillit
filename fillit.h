@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/30 15:12:57 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 17:33:01 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,13 @@ int				ft_distribute_tetriminos(t_tetri **tab, char *s);
 void			ft_putstr_fd(char const *s, int fd);
 
 void			ft_upleft(char *s);
+
+char			*ft_generate_map(unsigned int width);
+
+int				ft_can_copy(char **map, t_tetri *t);
+
+int				ft_map_copy(char **map, t_tetri *t);
+
+char			*ft_resize_tetri(t_tetri *t, size_t size);
 
 #endif

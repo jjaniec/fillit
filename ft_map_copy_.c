@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 15:07:13 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 17:27:12 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 17:31:14 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 char	*ft_generate_map(int x);
 
 int		ft_map_copy(char **map, t_tetri *t);
+
+/*
+** Tries to copy tetriminos $t and return 1 or 0 based on ft_map_copy return
+*/
 
 int		ft_can_copy(char **map, t_tetri *t)
 {
@@ -29,6 +33,10 @@ int		ft_can_copy(char **map, t_tetri *t)
 	free(tmp);
 	return (0);
 }
+
+/*
+** Copy tetriminos on map, if copy failed, returns 1, otherwise returns 0
+*/
 
 int		ft_map_copy(char **map, t_tetri *t)
 {
@@ -61,9 +69,12 @@ int		ft_map_copy(char **map, t_tetri *t)
 		i++;
 		j++;
 	}
-	printf("-c%d-", w);
 	return (((w == 4) ? (0) : (1)));
 }
+
+/*
+** Resize tetriminos's 'map' to $size
+*/
 
 char	*ft_resize_tetri(t_tetri *t, size_t size)
 {
