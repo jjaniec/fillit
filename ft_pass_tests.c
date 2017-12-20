@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_distribute_tetriminos.c                         :+:      :+:    :+:   */
+/*   ft_pass_tests.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/29 18:24:56 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 19:55:28 by jjaniec          ###   ########.fr       */
+/*   Created: 2017/12/20 19:24:17 by jjaniec           #+#    #+#             */
+/*   Updated: 2017/12/20 19:52:51 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		ft_distribute_tetriminos(t_tetri **tab, char *s)
+int		ft_pass_tests(char *file_content)
 {
-	int		i;
-	int		j;
+	int				i;
+	int				j;
+	unsigned short	r;
+	char			*t_tmp;
 
-	j = ft_count_tetris(s);
-	(*tab) = (t_tetri *)malloc(sizeof(t_tetri) * j);
-	i = -1;
-	while (++i != j)
+	r = 0;
+	j = 1;
+	i = ft_count_tetris(file_content);
+	if (i > 26 || ((int)ft_strlen(file_content) != (20 + (21 * (i - 1)))))
+		r = 1;
+	while (j != i && r != 1)
 	{
-		(*tab)[i].s = ft_parse_tetri(s, i + 1);
-		ft_upleft((*tab)[i].s);
-		printf("Struct %d -> |\n%s|", i, (*tab)[i].s);
+		t_tmp = ft_parse_tetri(file_content, j);
+		if (
+				ft_errordot(t_tmp) || \
+				ft_errorhashtag(t_tmp)
+			)
+			r = 1;
+		j++;
 	}
-	return (0);
+	if (r)
+		write(1, "error", 5);
+	return (r);
 }
