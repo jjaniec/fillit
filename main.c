@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 23:09:37 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/20 19:43:35 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 19:56:22 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int		main()
 	s = ft_read_content(fd);
 	if (ft_pass_tests(s))
 		return (1);
-	if (ft_distribute_tetriminos(&tab, s) == 1)
-		return (1);
+	ft_distribute_tetriminos(&tab, s);
 	return (0);
 }
 
