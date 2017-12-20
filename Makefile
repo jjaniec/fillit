@@ -6,7 +6,7 @@
 #    By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 17:05:25 by jjaniec           #+#    #+#              #
-#    Updated: 2017/12/20 18:40:21 by jjaniec          ###   ########.fr        #
+#    Updated: 2017/12/20 19:44:28 by jjaniec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS = ft_read_content.c \
 	   ft_count_tetris.c \
 	   ft_parse_tetri.c \
 	   ft_distribute_tetriminos.c \
+	   ft_pass_tests.c \
 	   ft_errordot.c \
 	   ft_errorhashtag.c \
 	   ft_upleft.c \
