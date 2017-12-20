@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:47:50 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/11/30 15:12:11 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 18:31:53 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,8 @@
 
 char	*ft_parse_tetri(char *s, int nb)
 {
-	int		i;
+	char	*t;
 
-	i = 0;
-	while (s[i] != '#' && s[i] != '.')
-		i++;
-	while (s[i])
-	{
-		if ((s[i] == '#' || s[i] == '.') && nb != 1)
-		{
-			while ((s[i] != '\n' || s[i + 1] != '\n') && s[i + 1])
-				i++;
-			while (s[i] == '\n')
-				i++;
-			nb--;
-		}
-		if (nb == 1)
-			return (ft_strsub(s, i, 20));
-		i++;
-	}
-	return (NULL);
+	t = ft_strsub(s, ((nb - 1) * 21), 20);
+	return ((ft_strlen(t) == 20) ? (t) : (NULL));
 }
