@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 19:44:15 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 20:01:02 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ unsigned int	ft_get_map_size(char *m);
 int				ft_count_tetris(char *file_content);
 
 int				ft_pass_tests(char *file_content);
+
+void			ft_print_usage(void);
 
 #endif
