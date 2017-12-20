@@ -6,13 +6,13 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 19:58:44 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 20:00:08 by jjaniec          ###   ########.fr       */
+/*   Updated: 2017/12/20 20:02:06 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_print_usage(void)
+int		ft_print_usage(void)
 {
 	write(1, "Usage: ./fillit \"filepath\"", 27);
 	return (1);
