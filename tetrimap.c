@@ -1,42 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   puttetri.c                                         :+:      :+:    :+:   */
+/*   tetrimap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/18 15:41:55 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/20 22:56:50 by unicolai         ###   ########.fr       */
+/*   Created: 2017/12/21 12:47:52 by unicolai          #+#    #+#             */
+/*   Updated: 2017/12/21 15:13:38 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-#define	SUCCESS 0
+#define SUCCESS 0
 #define ERROR 1
-
-int		ft_strlen(char *s)
-{
-	int		i;
-	int		result;
-
-	result = 0;
-	i = -1;
-	while (s[++i] != 0)
-		result++;
-	return (result);
-}
-
-int		fillit_sqrt(int n)
-{
-	int		res;
-
-	res = 1;
-	while (res * res < n)
-		++res;
-	return (res);
-}
 
 int		nbligne(char *map)
 {
@@ -45,113 +23,100 @@ int		nbligne(char *map)
 	i = 0;
 	while (map[i] != '\n')
 		i++;
+	i++;
 	return (i);
 }
 
-void	ft_backtrack(char *map, t_tetri *tabtetri)
+void	skip_allready_taken(char *map, int *i, int *result, int *onemore)
+{
+	while (map[*i] != '.' && map[*i] != '\0')
+		(*i)++;
+	if (*result == ERROR)
+		*i += *onemore;
+}
+
+int		put_tetri_on_map(t_tetri *tabtetri, int *j, char *map, int *i)
+{
+	static int	k = 0;
+	int			marquer;
+	int			nbl;
+	int			result;
+
+	result = (k -= k + 1) ? SUCCESS : SUCCESS;
+	while (tabtetri[*j].s[++k] != '\0' && result == SUCCESS && map[*i] != '\0')
+	{
+		nbl = nbligne(map);
+		if (tabtetri[*j].s[k] == '#' && tabtetri[*j].s[k - 1] != '#')
+			marquer = (*i % nbl) - (k % 5);
+		if (tabtetri[*j].s[k] == '#' && map[*i] == '.')
+			map[*i] = '*';
+		else if (tabtetri[*j].s[k] == '#' && map[*i] != '.')
+			result = ERROR;
+		else if (tabtetri[*j].s[k] == '\n')
+			while (map[*i] != '\n' || ((*i += marquer) ? 0 : 0))
+				(*i)++;
+		else if (map[*i] == '\n' && ((*i += marquer) ? 1 : 1))
+			while (tabtetri[*j].s[k] != '\n')
+				if (tabtetri[*j].s[k++] == '#')
+					result = ERROR;
+		(*i)++;
+	}
+	return (result);
+}
+
+int		change_stars(char *map, int *result, int *j, t_tetri *tabtetri)
+{
+	int	i;
+	int	firststar;
+	int	nbl;
+
+	i = 0;
+	firststar = SUCCESS;
+	nbl = nbligne(map);
+	while (map[i] != '\0')
+	{
+		if (map[i] == '*' && *result == SUCCESS)
+		{
+			map[i] = *j + 65;
+			if (firststar == SUCCESS)
+			{
+				tabtetri[*j].x = i % nbl;
+				tabtetri[*j].y = i / nbl;
+				firststar = ERROR;
+			}
+		}
+		else if (map[i] == '*' && *result == ERROR)
+			map[i] = '.';
+		i++;
+	}
+	return (i);
+}
+
+void	tetrimap(char *map, t_tetri *tabtetri)
 {
 	int		i;
 	int		j;
-	int		k;
-	int		l;
 	int		nbl;
 	int		result;
-	int		firststar;
 	int		onemore;
-	int		marquer;
-	int		nexthashtag;
-	int		returnligne;
 
 	j = 0;
 	onemore = 0;
-	while (tabtetri[j].s != NULL) // Pour chaque tetri
+	nbl = nbligne(map);
+	while (tabtetri[j].s != NULL)
 	{
-		k = 0; // charactere d'un tetri
-		i = 0; // charactere de la map
-		while (map[i] != '.' && map[i] != '\0') // Pour avancer si la place dans la map est deja occupee
-			i++;
-		if (result == ERROR)
-			i += onemore;
-		result = SUCCESS;
-		//printf("map[%d] = %c\n", i, map[i]);
-		while (tabtetri[j].s[k] != '\0' && result == SUCCESS && map[i] != '\0') // Analyse chaque char du tetri
-		{
-			nbl = nbligne(map) + 1;
-			nexthashtag = 0;
-			l = k;
-			returnligne = 0;
-//			if (tabtetri[j].s[k] == '#' && tabtetri[j].s[k-1] != '#')
-//			{
-//				l++;
-//				nexthashtag = 1 - nbl;
-//				printf("-->>%c, nh : %d\n", tabtetri[j].s[l], nexthashtag);
-//				while (tabtetri[j].s[l] != '#' && returnligne != 1 && tabtetri[j].s[l] != '\0')
-//				{
-//					if (tabtetri[j].s[l] == '\n')
-//						returnligne = 1;
-//					printf("-->%c, nh : %d\n", tabtetri[j].s[l], nexthashtag);
-//					nexthashtag++;
-//					l++;
-//				}
-//			}
-			if (tabtetri[j].s[k] == '#')
-			{
-				printf("nexthashtag: %d\n", nexthashtag);
-				printf("i: %d, i modulo nbl: %d\n", i, i % nbl);
-				printf("marquer: %d de j, k %d, %d\n", marquer, j, k);
-			}
-			if (tabtetri[j].s[k] == '#' && tabtetri[j].s[k - 1] != '#')
-				marquer = (i % nbl) - (k % 5);
-			if (tabtetri[j].s[k] == '#' && map[i] == '.') // Si la place est disponible pour placer un bout de la piece du tetri
-				map[i] = '*';
-			else if (tabtetri[j].s[k] == '#' && map[i] != '.') // Si la place n'est pas disponible
-				result = ERROR;
-			else if (tabtetri[j].s[k] == '\n') // Si on veut passer a la ligne suivante de la map car on est en bout de ligne du tetri
-			{
-				while (map[i] != '\n')
-					i++;
-				i += marquer;
-			}
-			else if (map[i] == '\n') // Si je suis en fin de map
-			{
-				i += marquer;
-				while (tabtetri[j].s[k] != '\n')
-				{
-					if (tabtetri[j].s[k] == '#')
-						result = ERROR;
-					k++;
-				}
-			}
-			//printf("equanime\nresult = %d, tabtetri[%d].s[%d] = %c\n", result, j, k, tabtetri[j].s[k]);
-			i++; // On passe au char suivant sur la map
-			k++; // On passe au char suivant du tetri
-		}
-		printf("map :\n%s\n", map);
 		i = 0;
-		firststar = 1;
-		while (map[i] != '\0')
-		{
-			if (map[i] == '*' && result == SUCCESS)
-			{
-				map[i] = j + 65;
-				onemore = 0;
-				if (firststar == 1)
-				{
-					tabtetri[j].x = i % nbl;
-					tabtetri[j].y = i / nbl;
-					firststar = 0;
-				}
-			}
-			else if (map[i] == '*' && result == ERROR)
-				map[i] = '.';
-			i++;
-		}
+		skip_allready_taken(map, &i, &result, &onemore);
+		result = put_tetri_on_map(tabtetri, &j, map, &i);
+		i = 0;
+		i = change_stars(map, &result, &j, tabtetri);
 		if (result == SUCCESS)
+		{
+			onemore = 0;
 			j++;
+		}
 		else
 			onemore++;
-		//printf("2. tabtetri[%d].x = %d, tabtetri[%d].y = %d, tabtetri[%d].s = %s\n", j, tabtetri[j].x, j, tabtetri[j].y, j, tabtetri[j].s);
-		//printf("1. tabtetri[%d].s[%d] = %c, result = %d, map[%d] = %c\n", j, k, tabtetri[j].s[k], result, i, map[i]);
 	}
 }
 
@@ -177,10 +142,10 @@ int				main(int ac, char **av)
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t4.s = "..#.\n###.\n....\n....\n....\n";
+	t1.s = ".#..\n###.\n....\n....\n....\n";
 	t2.s = "##...\n.##.\n....\n....\n....\n";
 	t3.s = "#...\n#...\n#...\n#...\n....\n";
-	t1.s = ".#...\n###.\n....\n....\n....\n";
+	t4.s = ".#...\n###.\n....\n....\n....\n";
 	t1.x = 0;
 	t1.y = 0;
 	t2.x = 0;
@@ -195,7 +160,7 @@ int				main(int ac, char **av)
 	tabtetri[2] = t3;
 	tabtetri[3] = t4;
 	tabtetri[4].s = NULL;
-	ft_backtrack(map, tabtetri);
+	tetrimap(map, tabtetri);
 	i = 0;
 	while (tabtetri[i].s != NULL)
 	{
@@ -206,3 +171,4 @@ int				main(int ac, char **av)
 	return (0);
 }
 //</d0>
+
