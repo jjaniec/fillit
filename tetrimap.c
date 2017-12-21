@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/21 23:13:31 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/21 23:43:17 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		put_tetri_on_map(t_tetri *tabtetri, int *j, char *map, int *i)
 
 	nbstar = 0;
 	result = (k -= k + 1) ? SUCCESS : SUCCESS;
+	printf("i: %d\n", *i);
 	while (tabtetri[*j].s[k] != '#')
 		k++;
 	k--;
@@ -66,6 +67,8 @@ int		put_tetri_on_map(t_tetri *tabtetri, int *j, char *map, int *i)
 		printf("%s\n", map);
 		(*i)++;
 	}
+	if (map[*i] == '\0' && result == SUCCESS && nbstar != 4)
+		result = ERROR;
 	return (result);
 }
 
@@ -114,7 +117,7 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 		printf("j: %d, i: %d, onemore: %d\n", j, i, onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
 		i = change_stars(map, &result, &j, tabtetri);
-		if (result == SUCCESS)
+		if (result == SUCCESS || (result == ERROR && map[i] == '\0'))
 		{
 			onemore = 0;
 			j++;
