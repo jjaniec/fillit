@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 12:47:52 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/21 15:43:42 by unicolai         ###   ########.fr       */
+/*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
+/*   Updated: 2017/12/21 19:47:02 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 
 	j = 0;
 	onemore = 0;
+	result = SUCCESS;
 	while (tabtetri[j].s != NULL)
 	{
 		i = 0;
@@ -115,6 +116,7 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 		}
 		else
 			onemore++;
+		onemore += onemore % nbligne(map);
 	}
 }
 
@@ -126,23 +128,23 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 #include <string.h>
 #include <ctype.h>
 
-int				main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	int			i;
 
 	(void)ac;
 	(void)av;
 
-	char map[300] = "......\n......\n......\n......\n......\n......\n";
+	char map[300] = "...\n...\n...\n";
 	t_tetri t1;
 	t_tetri t2;
 	t_tetri t3;
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t1.s = "..#.\n###.\n....\n....\n....\n";
-	t2.s = "##...\n##..\n....\n....\n....\n";
-	t3.s = ".#..\n.#..\n##...\n....\n....\n";
+	t1.s = "#...\n#...\n##..\n....\n....\n";
+	t2.s = "##..\n##..\n....\n....\n....\n";
+	t3.s = ".#..\n.#..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n....\n";
 	t1.x = 0;
 	t1.y = 0;
