@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 12:47:52 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/21 15:13:38 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/21 15:43:42 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,11 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 {
 	int		i;
 	int		j;
-	int		nbl;
 	int		result;
 	int		onemore;
 
 	j = 0;
 	onemore = 0;
-	nbl = nbligne(map);
 	while (tabtetri[j].s != NULL)
 	{
 		i = 0;
@@ -142,10 +140,10 @@ int				main(int ac, char **av)
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t1.s = ".#..\n###.\n....\n....\n....\n";
-	t2.s = "##...\n.##.\n....\n....\n....\n";
-	t3.s = "#...\n#...\n#...\n#...\n....\n";
-	t4.s = ".#...\n###.\n....\n....\n....\n";
+	t1.s = "..#.\n###.\n....\n....\n....\n";
+	t2.s = "##...\n##..\n....\n....\n....\n";
+	t3.s = ".#..\n.#..\n##...\n....\n....\n";
+	t4.s = "####\n....\n....\n....\n....\n";
 	t1.x = 0;
 	t1.y = 0;
 	t2.x = 0;
