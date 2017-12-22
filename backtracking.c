@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/22 21:38:52 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/22 21:42:27 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 			//decaltetri = 0;//
 			onemore++;
 		}
-		//onemore += decaltetri;//
 		printf("onemore: %d\n", onemore);
 		printf("%s\n", map);
 
