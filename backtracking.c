@@ -6,12 +6,13 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/22 21:42:27 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/22 22:51:43 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
+#include <unistd.h>
 
 #define SUCCESS 0
 #define ERROR 1
@@ -48,14 +49,22 @@ int		nbligne(char *map)
 	return (i);
 }
 
-void	skip_allready_taken(char *map, int *i, int *result, int *onemore)
+int		skip_allready_taken(char *map, int *decaltetri, int *result, int *onemore)
 {
-	while (map[*i] != '.' && map[*i] != '\0')
-		(*i)++;
-	printf("Before onemore i: %d\n", *i);
+	int	i;
+
+	(void)decaltetri;
+	i = 0;
+	while (map[i] != '.' && map[i] != '\0')
+	{
+		(i)++;
+		//(*decaltetri)++;
+	}
+	printf("Before onemore i: %d\n", i);
 	if (*result == ERROR)
-		*i += *onemore;
-	printf("After onemore i: %d\n\n", *i);
+		i += *onemore;
+	printf("After onemore i: %d\n\n", i);
+	return (i);
 }
 
 int		put_tetri_on_map(t_tetri *tbt, int *j, char *map, int *i)
@@ -122,21 +131,21 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 	int		result;
 	int		onemore;
 	int		decaltetri;//
-	//int		formertetri;//
+	//int		newchange;//
 
 	j = 0;
 	onemore = 0;
 	decaltetri = 0;//
-	//formertetri = 0;//
 	result = SUCCESS;
 	while (tabtetri[j].s != NULL)
 	{
-		i = 0;
-		skip_allready_taken(map, &i, &result, &onemore);
+		i = skip_allready_taken(map, &decaltetri, &result, &onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
 		change_stars(map, &result, &j, tabtetri);
+		printf("%s\n", map);
 		if (result == SUCCESS)
 		{
+			decaltetri = onemore;//
 			onemore = 0;
 			j++;
 			//decaltetri = 0;//
@@ -147,13 +156,17 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 			backtrack(map, tabtetri, &j);//
 			printf("After j: %d\n", j);
 //			if (onemore != 0)//
+			if (j == 0)//
+				decaltetri = 0;//
 			decaltetri++;//
+			printf("decaltetri: %d\n", decaltetri);
 			//onemore = 0;
 			onemore = decaltetri;//
 			//j++;
-			if (j == 0 && tabtetri[j].s[decaltetri] != '\0')//
+			if (j == -1)//
 			{//
 				printf("Agrandir map\n");//
+				tabtetri[j].s = NULL;//
 			}//
 		}
 		else
@@ -161,8 +174,9 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 			//decaltetri = 0;//
 			onemore++;
 		}
-		printf("onemore: %d\n", onemore);
-		printf("%s\n", map);
+		printf("onemore: %d, j: %d\n", onemore, j);
+		//printf("%s\n", map);
+		sleep(1);
 
 	}
 }
@@ -191,9 +205,9 @@ int		main(int ac, char **av)
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t1.s = "##..\n##..\n....\n....\n";
-	t2.s = ".#..\n.#..\n##..\n....\n";
-	t3.s = "#...\n#...\n##..\n....\n";
+	t1.s = ".#..\n.#..\n##..\n....\n";
+	t2.s = "#...\n#...\n##..\n....\n";
+	t3.s = "##..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n";
 	t1.x = 0;
 	t1.y = 0;
