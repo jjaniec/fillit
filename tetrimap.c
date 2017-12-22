@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/21 23:43:17 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/22 14:51:45 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		put_tetri_on_map(t_tetri *tabtetri, int *j, char *map, int *i)
 	{
 		if (tabtetri[*j].s[k] == '#' && tabtetri[*j].s[k - 1] != '#')
 			marker = (*i % nbligne(map)) - (k % 5);
-		printf("i: %d, marker: %d\n", *i, marker);
+		//printf("i: %d, marker: %d\n", *i, marker);
 		if (tabtetri[*j].s[k] == '#' && map[*i] == '.' && ++nbstar)
 			map[*i] = '*';
 		else if (tabtetri[*j].s[k] == '#' && map[*i] != '.')
@@ -69,6 +69,7 @@ int		put_tetri_on_map(t_tetri *tabtetri, int *j, char *map, int *i)
 	}
 	if (map[*i] == '\0' && result == SUCCESS && nbstar != 4)
 		result = ERROR;
+	printf("j: %d, k: %d, result: %d, i: %d\n", *j, k, result, *i);
 	return (result);
 }
 
@@ -97,6 +98,7 @@ int		change_stars(char *map, int *result, int *j, t_tetri *tabtetri)
 			map[i] = '.';
 		i++;
 	}
+	printf("iiiiiiiiii: %d, map[%d] : %c\n", i, i, map[i]);
 	return (i);
 }
 
@@ -114,9 +116,9 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 	{
 		i = 0;
 		skip_allready_taken(map, &i, &result, &onemore);
-		printf("j: %d, i: %d, onemore: %d\n", j, i, onemore);
+		//printf("j: %d, i: %d, onemore: %d\n", j, i, onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
-		i = change_stars(map, &result, &j, tabtetri);
+		change_stars(map, &result, &j, tabtetri); //////////
 		if (result == SUCCESS || (result == ERROR && map[i] == '\0'))
 		{
 			onemore = 0;
@@ -149,8 +151,8 @@ int		main(int ac, char **av)
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t1.s = ".#..\n.#..\n##..\n....\n....\n";
-	t2.s = "##..\n##..\n....\n....\n....\n";
+	t1.s = "##..\n##..\n....\n....\n....\n";
+	t2.s = "#...\n#...\n##..\n....\n....\n";
 	t3.s = ".#..\n.#..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n....\n";
 	t1.x = 0;
