@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/22 22:51:43 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/22 23:48:40 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,39 @@
 
 #define SUCCESS 0
 #define ERROR 1
+
+int		endofmap(char *map, t_tetri *tabtetri, int *j)
+{
+	int	i;
+	int	k;
+	int	firststar;
+	int	positionletter;
+	int	endoftetri;
+
+	k = 0;
+	firststar = SUCCESS;;
+	positionletter = 0;
+	endoftetri = ERROR;
+	while (tabtetri[*j].s[k])
+	{
+		if (firststar == SUCCESS)
+		{
+			firststar = ERROR;
+			positionletter = k % 5;
+		}
+		k++;
+	}
+	i = 0;
+	while (map[i])
+		i++;
+	printf("%s\n", map);
+	i -= 2;
+	printf("dernier char de la map: %c, j+65: %c, map[i:%d - positionletter:%d = %d] : %c\n", map[i], *j+65, i, positionletter, i-positionletter, map[i-positionletter]);
+	if (map[i - positionletter] == *j - 1 + 65) //////// CA BOUCLE ICI A VOIR POURQUOI A CAUSE DU -1
+		endoftetri = SUCCESS;
+	printf("result endoftetri : %d, map[i - positionletter] : %c, j+65 : %c\n", endoftetri, map[i - positionletter], *j + 65);
+	return (endoftetri);
+}
 
 void	remove_last_tetri(char *map, int *j)
 {
@@ -152,13 +185,12 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 		}
 		else if (result == ERROR && map[i] == '\0')
 		{
+			decaltetri++;//
+			if (endofmap(map, tabtetri, &j) == SUCCESS)//
+				decaltetri = 0;//
 			printf("Before j: %d\n", j);
 			backtrack(map, tabtetri, &j);//
 			printf("After j: %d\n", j);
-//			if (onemore != 0)//
-			if (j == 0)//
-				decaltetri = 0;//
-			decaltetri++;//
 			printf("decaltetri: %d\n", decaltetri);
 			//onemore = 0;
 			onemore = decaltetri;//
@@ -176,7 +208,7 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 		}
 		printf("onemore: %d, j: %d\n", onemore, j);
 		//printf("%s\n", map);
-		sleep(1);
+		//sleep(1);
 
 	}
 }
