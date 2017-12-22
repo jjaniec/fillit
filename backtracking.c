@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/21 22:09:25 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/22 14:51:45 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,38 @@ void	skip_allready_taken(char *map, int *i, int *result, int *onemore)
 int		put_tetri_on_map(t_tetri *tabtetri, int *j, char *map, int *i)
 {
 	static int	k = 0;
-	int			marquer;
-	int			nbl;
+	int			marker;
 	int			result;
+	int			nbstar;
 
+	nbstar = 0;
 	result = (k -= k + 1) ? SUCCESS : SUCCESS;
-	while (tabtetri[*j].s[++k] != '\0' && result == SUCCESS && map[*i] != '\0')
+	printf("i: %d\n", *i);
+	while (tabtetri[*j].s[k] != '#')
+		k++;
+	k--;
+	while (tabtetri[*j].s[++k] != '\0' && result == SUCCESS && map[*i] != '\0' && nbstar < 4)
 	{
-		nbl = nbligne(map);
 		if (tabtetri[*j].s[k] == '#' && tabtetri[*j].s[k - 1] != '#')
-			marquer = (*i % nbl) - (k % 5);
-		if (tabtetri[*j].s[k] == '#' && map[*i] == '.')
+			marker = (*i % nbligne(map)) - (k % 5);
+		//printf("i: %d, marker: %d\n", *i, marker);
+		if (tabtetri[*j].s[k] == '#' && map[*i] == '.' && ++nbstar)
 			map[*i] = '*';
 		else if (tabtetri[*j].s[k] == '#' && map[*i] != '.')
 			result = ERROR;
 		else if (tabtetri[*j].s[k] == '\n')
-			while (map[*i] != '\n' || ((*i += marquer) ? 0 : 0))
+			while (map[*i] != '\n' || ((*i += marker) ? 0 : 0))
 				(*i)++;
-		else if (map[*i] == '\n' && ((*i += marquer) ? 1 : 1))
+		else if (map[*i] == '\n' && ((*i += marker) ? 1 : 1))
 			while (tabtetri[*j].s[k] != '\n')
 				if (tabtetri[*j].s[k++] == '#')
 					result = ERROR;
+		printf("%s\n", map);
 		(*i)++;
 	}
+	if (map[*i] == '\0' && result == SUCCESS && nbstar != 4)
+		result = ERROR;
+	printf("j: %d, k: %d, result: %d, i: %d\n", *j, k, result, *i);
 	return (result);
 }
 
@@ -89,6 +98,7 @@ int		change_stars(char *map, int *result, int *j, t_tetri *tabtetri)
 			map[i] = '.';
 		i++;
 	}
+	printf("iiiiiiiiii: %d, map[%d] : %c\n", i, i, map[i]);
 	return (i);
 }
 
@@ -106,17 +116,16 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 	{
 		i = 0;
 		skip_allready_taken(map, &i, &result, &onemore);
+		//printf("j: %d, i: %d, onemore: %d\n", j, i, onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
-		i = 0;
-		i = change_stars(map, &result, &j, tabtetri);
-		if (result == SUCCESS)
+		change_stars(map, &result, &j, tabtetri); //////////
+		if (result == SUCCESS || (result == ERROR && map[i] == '\0'))
 		{
 			onemore = 0;
 			j++;
 		}
 		else
 			onemore++;
-		onemore += onemore % nbligne(map);
 	}
 }
 
@@ -142,8 +151,8 @@ int		main(int ac, char **av)
 	t_tetri t4;
 	t_tetri	*tabtetri;
 
-	t1.s = "#...\n#...\n##..\n....\n....\n";
-	t2.s = "##..\n##..\n....\n....\n....\n";
+	t1.s = "##..\n##..\n....\n....\n....\n";
+	t2.s = "#...\n#...\n##..\n....\n....\n";
 	t3.s = ".#..\n.#..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n....\n";
 	t1.x = 0;
