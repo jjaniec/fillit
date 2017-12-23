@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/22 23:48:40 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/23 12:23:30 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,51 @@
 
 #define SUCCESS 0
 #define ERROR 1
+
+int		firsthashtag(t_tetri *tabtetri, int *j)
+{
+	int	k;
+	int	jprevious;
+
+	k = 0;
+	jprevious = *j - 1;
+	while (tabtetri[jprevious].s[k] != '#')
+		k++;
+	printf("K: %d, jprevious: %d\n", k, jprevious);
+	return (k);
+}
+
+int		endofmap2(char *map, t_tetri *tabtetri, int *j, int i)
+{
+	int	k;
+	int	hashtag_more_right;
+	int	nbhashtag;
+	int	lasthashtag;
+	int	endoftetri;
+
+	k = 0;
+	nbhashtag = 0;
+	hashtag_more_right = k % 5;
+	endoftetri = ERROR;
+	while (tabtetri[*j].s[k])
+	{
+		if (tabtetri[*j].s[k] == '#')
+		{
+			nbhashtag++;
+			if (k % 5 > hashtag_more_right)
+				hashtag_more_right = k % 5;
+			if (nbhashtag == 4)
+				lasthashtag = k;
+		}
+		k++;
+	}
+	printf("hmr: %d, lh modulo 5 : %d\n", hashtag_more_right, lasthashtag % 5);
+	hashtag_more_right = hashtag_more_right - (lasthashtag % 5);
+	if (map[i + lasthashtag + hashtag_more_right + 2] == '\0')
+		endoftetri = SUCCESS;
+	printf("result endoftetri: %d\nmap[%d] : %c, lasthashtag: %d, hmr: %d, map[lh+i+hmr:%d] |%c|\n", endoftetri, i, map[i], lasthashtag, hashtag_more_right, lasthashtag + i + hashtag_more_right, map[lasthashtag + i + hashtag_more_right]);
+	return (endoftetri);
+}
 
 int		endofmap(char *map, t_tetri *tabtetri, int *j)
 {
@@ -68,6 +113,7 @@ void	backtrack(char *map, t_tetri *tabtetri, int *j)
 {
 	remove_last_tetri(map, j);
 //	(*j)++;
+	printf("remove map: \n%s\n", map);
 	(void)tabtetri;
 }
 
@@ -82,16 +128,14 @@ int		nbligne(char *map)
 	return (i);
 }
 
-int		skip_allready_taken(char *map, int *decaltetri, int *result, int *onemore)
+int		skip_allready_taken(char *map, int *result, int *onemore)
 {
 	int	i;
 
-	(void)decaltetri;
 	i = 0;
 	while (map[i] != '.' && map[i] != '\0')
 	{
-		(i)++;
-		//(*decaltetri)++;
+		i++;
 	}
 	printf("Before onemore i: %d\n", i);
 	if (*result == ERROR)
@@ -110,6 +154,7 @@ int		put_tetri_on_map(t_tetri *tbt, int *j, char *map, int *i)
 	r = ((k -= k + 1) && (star -= star)) ? SUCCESS : SUCCESS;
 	while (tbt[*j].s[k] != '#' || ((k--) ? 0 : 0))
 		k++;
+	printf("k: %d, i: %d\n",k+1, *i);//
 	while (tbt[*j].s[++k] != '\0' && r == SUCCESS && map[*i] != 0 && star < 4)
 	{
 		if (tbt[*j].s[k] == '#' && tbt[*j].s[k - 1] != '#')
@@ -163,37 +208,45 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 	int		j;
 	int		result;
 	int		onemore;
-	int		decaltetri;//
+	//int		decaltetri;//
 	//int		newchange;//
 
 	j = 0;
 	onemore = 0;
-	decaltetri = 0;//
+	//decaltetri = 0;//
 	result = SUCCESS;
 	while (tabtetri[j].s != NULL)
 	{
-		i = skip_allready_taken(map, &decaltetri, &result, &onemore);
+		i = skip_allready_taken(map, &result, &onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
 		change_stars(map, &result, &j, tabtetri);
 		printf("%s\n", map);
 		if (result == SUCCESS)
 		{
-			decaltetri = onemore;//
+			tabtetri[j].decaltetri = onemore;//
 			onemore = 0;
 			j++;
 			//decaltetri = 0;//
 		}
 		else if (result == ERROR && map[i] == '\0')
 		{
-			decaltetri++;//
+			printf("IIIIIIIIIIIIIIIIIIIIII: %d\n", i);
+			//if(endofmap2(map, tabtetri, &j, i) == SUCCESS)//
 			if (endofmap(map, tabtetri, &j) == SUCCESS)//
-				decaltetri = 0;//
+			{//
+				tabtetri[j].decaltetri = 0;//
+				backtrack(map, tabtetri, &j);//
+				tabtetri[j].decaltetri += firsthashtag(tabtetri, &j);
+				printf("yeah tbt[%d].decaltetri: %d\n", j, tabtetri[j].decaltetri);
+				//j--;//
+			}//
 			printf("Before j: %d\n", j);
 			backtrack(map, tabtetri, &j);//
 			printf("After j: %d\n", j);
-			printf("decaltetri: %d\n", decaltetri);
+			tabtetri[j].decaltetri++;//
+			printf("tbt[%d].decaltetri: %d\n", j,tabtetri[j].decaltetri);
 			//onemore = 0;
-			onemore = decaltetri;//
+			onemore = tabtetri[j].decaltetri;//
 			//j++;
 			if (j == -1)//
 			{//
@@ -206,9 +259,9 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 			//decaltetri = 0;//
 			onemore++;
 		}
-		printf("onemore: %d, j: %d\n", onemore, j);
+		printf("tbt[%d].decaltetri: %d, onemore: %d, j: %d\n", j, tabtetri[j].decaltetri, onemore, j);
 		//printf("%s\n", map);
-		//sleep(1);
+		sleep(1);
 
 	}
 }
@@ -241,14 +294,19 @@ int		main(int ac, char **av)
 	t2.s = "#...\n#...\n##..\n....\n";
 	t3.s = "##..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n";
-	t1.x = 0;
-	t1.y = 0;
-	t2.x = 0;
-	t2.y = 0;
-	t3.x = 0;
-	t3.y = 0;
-	t4.x = 0;
-	t4.y = 0;
+	t1.x = -1;
+	t1.y = -1;
+	t2.x = -1;
+	t2.y = -1;
+	t3.x = -1;
+	t3.y = -1;
+	t4.x = -1;
+	t4.y = -1;
+	t1.decaltetri = 0;
+	t2.decaltetri = 0;
+	t3.decaltetri = 0;
+	t4.decaltetri = 0;
+
 	tabtetri = (t_tetri *)malloc(sizeof(t_tetri) * 5);
 	tabtetri[0] = t1;
 	tabtetri[1] = t2;

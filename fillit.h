@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 19:32:21 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/23 11:56:54 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_tetri
 	int		x;
 	int		y;
 	char	*s;
+	int		decaltetri;
 }				t_tetri;
 
 char			*ft_read_content(int fd);
