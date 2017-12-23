@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tetrimap.c                                         :+:      :+:    :+:   */
+/*   ptbacktracking.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 19:46:58 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/23 15:29:41 by unicolai         ###   ########.fr       */
+/*   Created: 2017/12/23 18:26:34 by unicolai          #+#    #+#             */
+/*   Updated: 2017/12/23 23:42:49 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,84 +28,48 @@ int		nbligne(char *map)
 	return (i);
 }
 
-char	*enlargemap(int *j, char *map, int *result)
+void	enlargemap(int *j, char **map, int *result)
 {
 	int newnbl;
 	int	i;
 	int	i2;
-	char *newmap;
 
-	newnbl = nbligne(map) + 1;
-	printf("Agrandir map\n");
-	printf("nbl: %d, newnbl: %d\n", nbligne(map), newnbl);
+	newnbl = nbligne(*map) + 1;
 	*j = 0;
 	*result = SUCCESS;
-	newmap = malloc(sizeof(*newmap) * (newnbl * newnbl - newnbl + 1));
+	if (!(*map = malloc(sizeof(**map) * (newnbl * newnbl - newnbl + 1))))
+		exit(EXIT_FAILURE);
 	i = 0;
 	i2 = 0;
 	while (i <= (newnbl - 1)  * (newnbl - 1))
 	{
 		while (i2 < newnbl - 1)
 		{
-			newmap[i] = '.';
-			printf("map[%d]: %c, i2: %d\n", i, newmap[i], i2);
+			(*map)[i] = '.';
 			i++;
 			i2++;
 		}
-		newmap[i] = '\n';
+		(*map)[i] = '\n';
 		i2 = 0;
 		i++;
 	}
-	newmap[i] = '\0';
-	return (newmap);
+	(*map)[i] = '\0';
 }
 
-int		firsthashtag(t_tetri *tabtetri, int *j)
+int		firsthashtag(t_tetri *tabtetri, int j)
 {
 	int	k;
 	int	jprevious;
 
 	k = 0;
-	jprevious = *j - 1;
+	jprevious = j - 1;
 	while (tabtetri[jprevious].s[k] != '#')
 		k++;
 	printf("K: %d, jprevious: %d\n", k, jprevious);
 	return (k);
 }
 
-int		endofmap2(char *map, t_tetri *tabtetri, int *j, int i)
-{
-	int	k;
-	int	hashtag_more_right;
-	int	nbhashtag;
-	int	lasthashtag;
-	int	endoftetri;
-
-	k = 0;
-	nbhashtag = 0;
-	hashtag_more_right = k % 5;
-	endoftetri = ERROR;
-	while (tabtetri[*j].s[k])
-	{
-		if (tabtetri[*j].s[k] == '#')
-		{
-			nbhashtag++;
-			if (k % 5 > hashtag_more_right)
-				hashtag_more_right = k % 5;
-			if (nbhashtag == 4)
-				lasthashtag = k;
-		}
-		k++;
-	}
-	printf("hmr: %d, lh modulo 5 : %d\n", hashtag_more_right, lasthashtag % 5);
-	hashtag_more_right = hashtag_more_right - (lasthashtag % 5);
-	if (map[i + lasthashtag + hashtag_more_right + 2] == '\0')
-		endoftetri = SUCCESS;
-	printf("result endoftetri: %d\nmap[%d] : %c, lasthashtag: %d, hmr: %d, map[lh+i+hmr:%d] |%c|\n", endoftetri, i, map[i], lasthashtag, hashtag_more_right, lasthashtag + i + hashtag_more_right, map[lasthashtag + i + hashtag_more_right]);
-	return (endoftetri);
-}
-
-int		endofmap(char *map, t_tetri *tabtetri, int *j)
+int		endofmap(char *map, t_tetri *tabtetri, int j)
 {
 	int	i;
 	int	k;
@@ -113,51 +77,63 @@ int		endofmap(char *map, t_tetri *tabtetri, int *j)
 	int	positionletter;
 	int	endoftetri;
 
-	k = 0;
+	k = -1;
 	firststar = SUCCESS;;
 	positionletter = 0;
 	endoftetri = ERROR;
-	while (tabtetri[*j].s[k])
+	while (tabtetri[j].s[++k])
 	{
 		if (firststar == SUCCESS)
 		{
 			firststar = ERROR;
 			positionletter = k % 5;
 		}
-		k++;
 	}
 	i = 0;
 	while (map[i])
 		i++;
-	printf("%s\n", map);
 	i -= 2;
-	printf("dernier char de la map: %c, j+65: %c, map[i:%d - positionletter:%d = %d] : %c\n", map[i], *j+65, i, positionletter, i-positionletter, map[i-positionletter]);
-	if (map[i - positionletter] == *j - 1 + 65) //////// CA BOUCLE ICI A VOIR POURQUOI A CAUSE DU -1
+	if (map[i - positionletter] == j - 1 + 65)
 		endoftetri = SUCCESS;
-	printf("result endoftetri : %d, map[i - positionletter] : %c, j+65 : %c\n", endoftetri, map[i - positionletter], *j + 65);
 	return (endoftetri);
 }
 
-void	remove_last_tetri(char *map, int *j)
+void	remove_last_tetri(char **map, int *j)
 {
 	int	i;
 
 	i = 0;
 	(*j)--; // Pour acceder a l'element precedent
-	while (map[i])
+	while ((*map)[i])
 	{
-		if (map[i] == *j + 65)
-			map[i] = '.';
+		if ((*map)[i] == *j + 65)
+			(*map)[i] = '.';
 		i++;
 	}
 }
-
-void	backtrack(char *map, t_tetri *tabtetri, int *j)
+int		next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
 {
+	int	result;
+
+	result = ERROR;
+	if (endofmap(*map, *tabtetri, *j) == SUCCESS)//
+	{//
+		printf("6\n");
+		(*tabtetri)[*j].decaltetri = 0;//
+		remove_last_tetri(map, j);
+		printf("7\n");
+		if (*j != 0)//
+			(*tabtetri)[*j].decaltetri += firsthashtag(*tabtetri, *j);
+		printf("8\n");
+	}//
 	remove_last_tetri(map, j);
-//	(*j)++;
-	printf("remove map: \n%s\n", map);
-	(void)tabtetri;
+	printf("9\n");
+	*j >= 0 ? (*tabtetri)[*j].decaltetri++ : 0;
+	*onemore = (*tabtetri)[*j].decaltetri;//
+	if (*j == -1)//
+		enlargemap(j, map, &result);
+	printf("10\n");
+	return (result);
 }
 
 int		skip_allready_taken(char *map, int *result, int *onemore)
@@ -169,44 +145,50 @@ int		skip_allready_taken(char *map, int *result, int *onemore)
 	{
 		i++;
 	}
-	printf("Before onemore i: %d\n", i);
 	if (*result == ERROR)
 		i += *onemore;
-	printf("After onemore i: %d\n\n", i);
+	printf("1\n");
 	return (i);
 }
 
-int		put_tetri_on_map(t_tetri *tbt, int *j, char *map, int *i)
+int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 {
 	static int	k = 0;
 	int			marker;
 	int			r;
 	static int	star = 0;
 
+	printf("j: %d\n", *j);
 	r = ((k -= k + 1) && (star -= star)) ? SUCCESS : SUCCESS;
 	while (tbt[*j].s[k] != '#' || ((k--) ? 0 : 0))
 		k++;
-	printf("k: %d, i: %d\n",k+1, *i);//
-	while (tbt[*j].s[++k] != '\0' && r == SUCCESS && map[*i] != 0 && star < 4)
+	printf("k: %d\n", k);
+	while (tbt[*j].s[++k] != 0 && r == SUCCESS && (*map)[*i] != 0 && star < 4)
 	{
+		printf("GOOD HERE\n");
 		if (tbt[*j].s[k] == '#' && tbt[*j].s[k - 1] != '#')
-			marker = (*i % nbligne(map)) - (k % 5);
-		if (tbt[*j].s[k] == '#' && map[*i] == '.' && ++star)
-			map[*i] = '*';
-		else if (tbt[*j].s[k] == '#' && map[*i] != '.')
+			marker = (*i % nbligne(*map)) - (k % 5);
+		printf("marker: %d\n", marker);
+		printf("2\n");
+		if (tbt[*j].s[k] == '#' && (*map)[*i] == '.' && ++star)
+			(*map)[*i] = '*';
+		else if (tbt[*j].s[k] == '#' && (*map)[*i] != '.')
 			r = ERROR;
 		else if (tbt[*j].s[k] == '\n')
-			while (map[*i] != '\n' || ((*i += marker) ? 0 : 0))
+			while ((*map)[*i] != '\n' || ((*i += marker) ? 0 : 0))
 				(*i)++;
-		else if (map[*i] == '\n' && ((*i += marker) ? 1 : 1))
+		else if ((*map)[*i] == '\n' && ((*i += marker) ? 1 : 1))
 			while (tbt[*j].s[k] != '\n')
 				r = (tbt[*j].s[k++] == '#') ? ERROR : r;
+		//printf("%s\n", *map);
+		//sleep(1);
 		(*i)++;
 	}
-	return (r = (map[*i] == '\0' && r == SUCCESS && star != 4) ? ERROR : r);
+	printf("3\n");
+	return (r = ((*map)[*i] == '\0' && r == SUCCESS && star != 4) ? ERROR : r);
 }
 
-int		change_stars(char *map, int *result, int *j, t_tetri *tabtetri)
+int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 {
 	int	i;
 	int	firststar;
@@ -214,12 +196,13 @@ int		change_stars(char *map, int *result, int *j, t_tetri *tabtetri)
 
 	i = 0;
 	firststar = SUCCESS;
-	nbl = nbligne(map);
-	while (map[i] != '\0')
+	nbl = nbligne(*map);
+	printf("4\n");
+	while ((*map)[i] != '\0')
 	{
-		if (map[i] == '*' && *result == SUCCESS)
+		if ((*map)[i] == '*' && *result == SUCCESS)
 		{
-			map[i] = *j + 65;
+			(*map)[i] = *j + 65;
 			if (firststar == SUCCESS)
 			{
 				tabtetri[*j].x = i % nbl;
@@ -227,14 +210,15 @@ int		change_stars(char *map, int *result, int *j, t_tetri *tabtetri)
 				firststar = ERROR;
 			}
 		}
-		else if (map[i] == '*' && *result == ERROR)
-			map[i] = '.';
+		else if ((*map)[i] == '*' && *result == ERROR)
+			(*map)[i] = '.';
 		i++;
 	}
+	printf("5\n");
 	return (i);
 }
 
-void	tetrimap(char *map, t_tetri *tabtetri)
+void	tetrimap(char **map, t_tetri *tabtetri)
 {
 	int		i;
 	int		j;
@@ -246,43 +230,36 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 	result = SUCCESS;
 	while (tabtetri[j].s != NULL)
 	{
-		i = skip_allready_taken(map, &result, &onemore);
+		i = skip_allready_taken(*map, &result, &onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
 		change_stars(map, &result, &j, tabtetri);
-		printf("%s\n", map);
 		if (result == SUCCESS)
 		{
 			tabtetri[j].decaltetri = onemore;//
 			onemore = 0;
 			j++;
 		}
-		else if (result == ERROR && map[i] == '\0')
-		{
-			if (endofmap(map, tabtetri, &j) == SUCCESS)//
-			{//
-				tabtetri[j].decaltetri = 0;//
-				backtrack(map, tabtetri, &j);//
-				if (j != 0)//
-					tabtetri[j].decaltetri += firsthashtag(tabtetri, &j);
-			}//
-			backtrack(map, tabtetri, &j);//
-			j >= 0 ? tabtetri[j].decaltetri++ : 0;
-			onemore = tabtetri[j].decaltetri;//
-			if (j == -1)//
-			{
-				map = enlargemap(&j, map, &result);
-				printf("%s\n", map);
-				sleep(5);
-			}
-		}
+		else if (result == ERROR && (*map)[i] == '\0')
+			result = next_possibility(map, &tabtetri, &j, &onemore);
 		else
 			onemore++;
+		//printf("11\n%s\n", *map);
+		//sleep(1);
 	}
 }
 
 //Quand j'ai un tetri qui rentre pas, je reviens sur le tetri precedent et je le replace en le decalant de un. Je fais ca jusqua ce que le tetri d'apres rentre ou que ce tetri arrive au '\0'. Si le tetri arrive au '\0' je passe au tetri encore d'avant. Si le premier tetri arrive au '\0' j'aggrandi la map.
 
-//<d0>
+int		fillit_sqrt(int n)
+{
+	int		res;
+
+	res = 1;
+	while (res * res < n)
+		++res;
+	return (res);
+}
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -290,24 +267,24 @@ void	tetrimap(char *map, t_tetri *tabtetri)
 #include <string.h>
 #include <ctype.h>
 
-int		main(int ac, char **av)
+int		main()
 {
-	int			i;
-
-	(void)ac;
-	(void)av;
-
-	char map[300] = "....\n....\n....\n....\n";
+	int		i;
+	int		i2;
+	int		i3;
+	char	*map;
 	t_tetri t1;
 	t_tetri t2;
 	t_tetri t3;
 	t_tetri t4;
 	t_tetri	*tabtetri;
+	int		nbtetri;
+	int		taillemap;
 
 	t1.s = ".#..\n.#..\n##..\n....\n";
 	t2.s = "#...\n#...\n##..\n....\n";
 	t3.s = "##..\n##..\n....\n....\n";
-	t4.s = "###.\n..#.\n....\n....\n";
+	t4.s = "####\n....\n....\n....\n";
 	t1.x = -1;
 	t1.y = -1;
 	t2.x = -1;
@@ -320,14 +297,39 @@ int		main(int ac, char **av)
 	t2.decaltetri = 0;
 	t3.decaltetri = 0;
 	t4.decaltetri = 0;
-
-	tabtetri = (t_tetri *)malloc(sizeof(t_tetri) * 5);
+	i = -1;
+	i2 = 0;
+	i3 = 0;
+	if (!(tabtetri = (t_tetri *)malloc(sizeof(t_tetri) * 5)))
+		return (0);
 	tabtetri[0] = t1;
 	tabtetri[1] = t2;
 	tabtetri[2] = t3;
 	tabtetri[3] = t4;
 	tabtetri[4].s = NULL;
-	tetrimap(map, tabtetri);
+	nbtetri = 0;
+	while (tabtetri[++i].s != NULL)
+		nbtetri++;
+	taillemap = fillit_sqrt(nbtetri * 4) * fillit_sqrt(nbtetri * 4) + nbtetri;
+	if (!(map = malloc(sizeof(*map) * (taillemap + 1))))
+		return (0);
+	printf("taillemap: %d\n", taillemap);
+	while (i2 < taillemap)
+	{
+		while (i3 < nbtetri)
+		{
+			map[i2] = '.';
+			i2++;
+			i3++;
+		}
+		map[i2] = '\n';
+		printf("map[%d]: %c\n", i2, map[i2]);
+		i3 = 0;
+		i2++;
+	}
+	map[i2] = '\0';
+	printf("%s\n", map);
+	tetrimap(&map, tabtetri);
 	i = 0;
 	while (tabtetri[i].s != NULL)
 	{
@@ -337,5 +339,3 @@ int		main(int ac, char **av)
 	printf("%s\n", map);
 	return (0);
 }
-//</d0>
-
