@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 16:49:44 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 17:10:08 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 17:19:04 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,24 @@ int		main()
 	nbtetri = 0;
 	while (tabtetri[++i].s != NULL)
 		nbtetri++;
-	taillemap = ft_fillit_sqrt(nbtetri * 4) * ft_fillit_sqrt(nbtetri * 4) + nbtetri;
-	if (!(map = malloc(sizeof(*map) * (taillemap + 1))))
-		return (0);
-	printf("taillemap: %d\n", taillemap);
-	while (i2 < taillemap)
-	{
-		while (i3 < nbtetri)
-		{
-			map[i2] = '.';
-			i2++;
-			i3++;
-		}
-		map[i2] = '\n';
-		i3 = 0;
-		i2++;
-	}
-	map[i2] = '\0';
+	taillemap = ft_fillit_sqrt(nbtetri * 4);// * ft_fillit_sqrt(nbtetri * 4) + nbtetri;
+//	if (!(map = malloc(sizeof(*map) * (taillemap + 1))))
+//		return (0);
+//	printf("taillemap: %d\n", taillemap);
+//	while (i2 < taillemap)
+//	{
+//		while (i3 < nbtetri)
+//		{
+//			map[i2] = '.';
+//			i2++;
+//			i3++;
+//		}
+//		map[i2] = '\n';
+//		i3 = 0;
+//		i2++;
+//	}
+//	map[i2] = '\0';
+	map = ft_generate_map(taillemap);
 	printf("%s\n", map);
 	ft_fill_map(&map, tabtetri);
 	i = 0;
