@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <strings.h>
-//# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # define BUFF_SIZE 21
 # define SUCCESS 0
@@ -69,4 +69,9 @@ int				ft_map_len(char *map);
 void			ft_fill_map(char **map, t_tetri *tabtetri);
 
 int				ft_fillit_sqrt(int n);
+
+int				ft_pass_tests(char *file_content);
+
+int				ft_print_usage(void);
+
 #endif

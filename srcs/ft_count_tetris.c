@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_count_tetris.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/29 23:09:37 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/29 23:10:08 by unicolai         ###   ########.fr       */
+/*   Created: 2017/12/20 18:16:34 by jjaniec           #+#    #+#             */
+/*   Updated: 2017/12/20 18:33:15 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		main()
+int		ft_count_tetris(char *file_content)
 {
-	int		fd;
-	char	*s;
-	t_tetri		*tab;
+	int		i;
 
-	fd = open("map.fillit", O_RDONLY);
-	s = ft_read_content(fd);
-	if (ft_distribute_tetriminos(&tab, s) == 1)
-		return (1);
-	return (0);
+	i = 1;
+	while (ft_parse_tetri(file_content, i) != NULL)
+		i += 1;
+	return (i - 1);
 }
-

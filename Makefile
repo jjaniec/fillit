@@ -5,42 +5,61 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/23 17:05:25 by jjaniec           #+#    #+#              #
-#    Updated: 2017/12/20 18:40:21 by jjaniec          ###   ########.fr        #
+#    Created: 2017/12/20 20:31:14 by jjaniec           #+#    #+#              #
+#    Updated: 2017/12/20 20:38:13 by jjaniec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
-CFLAGS = -Wall -Werror -Wextra
+SRC_NAME = ft_count_tetris.c \
+		   ft_distribute_tetriminos.c \
+		   ft_errordot.c \
+		   ft_errorhashtag.c \
+		   ft_generate_map.c \
+		   ft_map_copy.c \
+		   ft_parse_tetri.c \
+		   ft_pass_tests.c \
+		   ft_print_usage.c \
+		   ft_read_content.c \
+		   ft_upleft.c \
+		   main.c
 
-HEAD = fillit.h
+SRC_DIR = ./srcs/
+INCLUDES_DIR = ./includes/
+OBJ_DIR = ./obj/
 
-SRCS = ft_read_content.c \
-	   ft_count_tetris.c \
-	   ft_parse_tetri.c \
-	   ft_distribute_tetriminos.c \
-	   ft_errordot.c \
-	   ft_errorhashtag.c \
-	   ft_upleft.c \
-	   main.c
+SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
+OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 
-OBJ = $(SRCS:.c=.o)
+CFLAGS = -Wall -Wextra -Werror
+IFLAGS = -I./libft -I./$(INCLUDES_DIR)
+LFLAGS = -L./libft/ -lft
+
 T_COUNT = 5
 
-all: $(NAME)
+all : $(NAME)
 
-$(NAME): map
-	gcc $(CFLAGS) -I $(HEAD) -c $(SRCS)
-	gcc $(CFLAGS) $(OBJ) -L libft/ -lft -o $(NAME)
+.PHONY : all clean map
+
+$(NAME) : $(OBJ) map
+	make -C ./libft/
+	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	gcc $(CFLAGS) -c $(IFLAGS) $^ -o $@
 
 map:
 	./map_generator $(T_COUNT)
 
 clean:
-	rm -rf $(OBJ)
+	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
+	make clean -C libft/
 
 fclean: clean
-	rm -rf $(NAME)
+	make fclean -C libft/
+	rm -f $(NAME) map.fillit
 
 re: fclean all
