@@ -18,7 +18,7 @@ int		ft_distribute_tetriminos(t_tetri **tab, char *s)
 	int		j;
 
 	j = ft_count_tetris(s);
-	(*tab) = (t_tetri *)malloc(sizeof(t_tetri) * j);
+	(*tab) = (t_tetri *)malloc(sizeof(t_tetri) * j + 1);
 	i = -1;
 	while (++i != j)
 	{
@@ -26,5 +26,6 @@ int		ft_distribute_tetriminos(t_tetri **tab, char *s)
 		ft_upleft((*tab)[i].s);
 		printf("Struct %d -> |\n%s|", i, (*tab)[i].s);
 	}
+	(*tab)[j].s = NULL;
 	return (0);
 }
