@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 18:26:34 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 14:35:03 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 16:12:40 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	enlargemap(int *j, char **map, int *result)
 	newnbl = nbligne(*map) + 1;
 	*j = 0;
 	*result = SUCCESS;
+	free(*map);
 	if (!(*map = malloc(sizeof(**map) * (newnbl * newnbl - newnbl + 1))))
 		exit(EXIT_FAILURE);
 	i = 0;
@@ -65,7 +66,6 @@ int		firsthashtag(t_tetri *tabtetri, int j)
 	jprevious = j - 1;
 	while (tabtetri[jprevious].s[k] != '#')
 		k++;
-	printf("K: %d, jprevious: %d\n", k, jprevious);
 	return (k);
 }
 
@@ -103,7 +103,7 @@ void	remove_last_tetri(char **map, int *j)
 	int	i;
 
 	i = 0;
-	(*j)--; // Pour acceder a l'element precedent
+	(*j)--;
 	while ((*map)[i])
 	{
 		if ((*map)[i] == *j + 65)
@@ -118,21 +118,16 @@ int		next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
 	result = ERROR;
 	if (endofmap(*map, *tabtetri, *j) == SUCCESS)//
 	{//
-		printf("6\n");
 		(*tabtetri)[*j].decaltetri = 0;//
 		remove_last_tetri(map, j);
-		printf("7\n");
 		if (*j != 0)//
 			(*tabtetri)[*j].decaltetri += firsthashtag(*tabtetri, *j);
-		printf("8\n");
 	}//
 	remove_last_tetri(map, j);
-	printf("9\n");
 	*j >= 0 ? (*tabtetri)[*j].decaltetri++ : 0;
 	*onemore = (*tabtetri)[*j].decaltetri;//
 	if (*j == -1)//
 		enlargemap(j, map, &result);
-	printf("10\n");
 	return (result);
 }
 
@@ -147,7 +142,6 @@ int		skip_dot_allready_taken(char *map, int *result, int *onemore)
 	}
 	if (*result == ERROR)
 		i += *onemore;
-	printf("1\n");
 	return (i);
 }
 
@@ -158,18 +152,13 @@ int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 	int			r;
 	static int	star = 0;
 
-	printf("j: %d\n", *j);
 	r = ((k -= k + 1) && (star -= star)) ? SUCCESS : SUCCESS;
 	while (tbt[*j].s[k] != '#' || ((k--) ? 0 : 0))
 		k++;
-	printf("k: %d\n", k);
 	while (tbt[*j].s[++k] != 0 && r == SUCCESS && (*map)[*i] != 0 && star < 4)
 	{
-		printf("GOOD HERE\n");
 		if (tbt[*j].s[k] == '#' && tbt[*j].s[k - 1] != '#')
 			marker = (*i % nbligne(*map)) - (k % 5);
-		printf("marker: %d\n", marker);
-		printf("2\n");
 		if (tbt[*j].s[k] == '#' && (*map)[*i] == '.' && ++star)
 			(*map)[*i] = '*';
 		else if (tbt[*j].s[k] == '#' && (*map)[*i] != '.')
@@ -180,11 +169,10 @@ int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 		else if ((*map)[*i] == '\n' && ((*i += marker) ? 1 : 1))
 			while (tbt[*j].s[k] != '\n')
 				r = (tbt[*j].s[k++] == '#') ? ERROR : r;
-		//printf("%s\n", *map);
-		//sleep(1);
 		(*i)++;
+		printf("%s\n", *map);
+		//sleep(1);
 	}
-	printf("3\n");
 	return (r = ((*map)[*i] == '\0' && r == SUCCESS && star != 4) ? ERROR : r);
 }
 
@@ -197,7 +185,6 @@ int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 	i = 0;
 	firststar = SUCCESS;
 	nbl = nbligne(*map);
-	printf("4\n");
 	while ((*map)[i] != '\0')
 	{
 		if ((*map)[i] == '*' && *result == SUCCESS)
@@ -214,7 +201,6 @@ int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 			(*map)[i] = '.';
 		i++;
 	}
-	printf("5\n");
 	return (i);
 }
 
@@ -243,7 +229,8 @@ void	fillmap(char **map, t_tetri *tabtetri)
 			result = next_possibility(map, &tabtetri, &j, &onemore);
 		else
 			onemore++;
-		//printf("11\n%s\n", *map);
+		printf("%s\n", *map);
+		//sleep(1);
 	}
 }
 
@@ -284,14 +271,14 @@ int		main()
 	t2.s = "#...\n#...\n##..\n....\n";
 	t3.s = "##..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n";
-	t1.x = -1;
-	t1.y = -1;
-	t2.x = -1;
-	t2.y = -1;
-	t3.x = -1;
-	t3.y = -1;
-	t4.x = -1;
-	t4.y = -1;
+//	t1.x = -1;
+//	t1.y = -1;
+//	t2.x = -1;
+//	t2.y = -1;
+//	t3.x = -1;
+//	t3.y = -1;
+//	t4.x = -1;
+//	t4.y = -1;
 	t1.decaltetri = 0;
 	t2.decaltetri = 0;
 	t3.decaltetri = 0;
@@ -322,7 +309,6 @@ int		main()
 			i3++;
 		}
 		map[i2] = '\n';
-		printf("map[%d]: %c\n", i2, map[i2]);
 		i3 = 0;
 		i2++;
 	}
