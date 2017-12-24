@@ -12,12 +12,16 @@
 
 NAME = fillit
 
-SRC_NAME = ft_count_tetris.c \
+SRC_NAME = backtracking.c \
+		   ft_count_tetris.c \
 		   ft_distribute_tetriminos.c \
 		   ft_errordot.c \
 		   ft_errorhashtag.c \
+		   ft_fillit_sqrt.c \
 		   ft_generate_map.c \
 		   ft_map_copy.c \
+		   ft_map_len.c \
+		   ft_next_possibility.c \
 		   ft_parse_tetri.c \
 		   ft_pass_tests.c \
 		   ft_print_usage.c \

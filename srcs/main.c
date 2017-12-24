@@ -17,6 +17,7 @@ int		main(int ac, char **av)
 	int		fd;
 	char	*s;
 	t_tetri		*tab;
+	char 	*map;
 
 	if (ac != 2)
 		return (ft_print_usage());
@@ -25,6 +26,10 @@ int		main(int ac, char **av)
 	if (ft_pass_tests(s))
 		return (1);
 	ft_distribute_tetriminos(&tab, s);
+	map = ft_generate_map(ft_fillit_sqrt(ft_count_tetris(s) * 4));
+	printf("%s\n", map);
+	ft_fill_map(&map, tab);
+	printf("%s\n", map);
 	return (0);
 }
 
