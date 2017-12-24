@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 18:26:34 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/23 23:42:49 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 14:35:03 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int		next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
 	return (result);
 }
 
-int		skip_allready_taken(char *map, int *result, int *onemore)
+int		skip_dot_allready_taken(char *map, int *result, int *onemore)
 {
 	int	i;
 
@@ -218,7 +218,7 @@ int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 	return (i);
 }
 
-void	tetrimap(char **map, t_tetri *tabtetri)
+void	fillmap(char **map, t_tetri *tabtetri)
 {
 	int		i;
 	int		j;
@@ -230,7 +230,7 @@ void	tetrimap(char **map, t_tetri *tabtetri)
 	result = SUCCESS;
 	while (tabtetri[j].s != NULL)
 	{
-		i = skip_allready_taken(*map, &result, &onemore);
+		i = skip_dot_allready_taken(*map, &result, &onemore);
 		result = put_tetri_on_map(tabtetri, &j, map, &i);
 		change_stars(map, &result, &j, tabtetri);
 		if (result == SUCCESS)
@@ -244,7 +244,6 @@ void	tetrimap(char **map, t_tetri *tabtetri)
 		else
 			onemore++;
 		//printf("11\n%s\n", *map);
-		//sleep(1);
 	}
 }
 
@@ -329,7 +328,7 @@ int		main()
 	}
 	map[i2] = '\0';
 	printf("%s\n", map);
-	tetrimap(&map, tabtetri);
+	fillmap(&map, tabtetri);
 	i = 0;
 	while (tabtetri[i].s != NULL)
 	{
