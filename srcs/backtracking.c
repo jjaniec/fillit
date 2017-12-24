@@ -55,7 +55,7 @@ static int	ft_put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 	return (r = ((*map)[*i] == '\0' && r == SUCCESS && star != 4) ? ERROR : r);
 }
 
-static int	ft_change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
+static int	ft_change_stars(char **map, int *result, int *j)
 {
 	int	i;
 	int	firststar;
@@ -70,11 +70,7 @@ static int	ft_change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 		{
 			(*map)[i] = *j + 65;
 			if (firststar == SUCCESS)
-			{
-				tabtetri[*j].x = i % nbl;
-				tabtetri[*j].y = i / nbl;
 				firststar = ERROR;
-			}
 		}
 		else if ((*map)[i] == '*' && *result == ERROR)
 			(*map)[i] = '.';
@@ -97,7 +93,7 @@ void	ft_fill_map(char **map, t_tetri *tabtetri)
 	{
 		i = ft_skip_dot_allready_taken(*map, &result, &onemore);
 		result = ft_put_tetri_on_map(tabtetri, &j, map, &i);
-		ft_change_stars(map, &result, &j, tabtetri);
+		ft_change_stars(map, &result, &j);
 		if (result == SUCCESS)
 		{
 			tabtetri[j].decaltetri = onemore;//

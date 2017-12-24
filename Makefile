@@ -19,7 +19,6 @@ SRC_NAME = backtracking.c \
 		   ft_errorhashtag.c \
 		   ft_fillit_sqrt.c \
 		   ft_generate_map.c \
-		   ft_map_copy.c \
 		   ft_map_len.c \
 		   ft_next_possibility.c \
 		   ft_parse_tetri.c \
