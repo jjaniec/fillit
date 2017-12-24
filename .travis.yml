@@ -5,4 +5,4 @@ compiler:
     - clang
 before_install:
     - git clone https://github.com/anisg/fillit_checker.git
-script: sh fillit_checker/test.sh $TRAVIS_BUILD_DIR
+script: ./fillit_checker/test.sh $TRAVIS_BUILD_DIR
