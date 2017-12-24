@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/23 11:56:54 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 16:34:51 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 //# include "libft/libft.h"
 
 # define BUFF_SIZE 21
+# define SUCCESS 0
+# define ERROR 1
 
 typedef struct	s_tetri
 {
@@ -59,4 +61,8 @@ unsigned int	ft_get_map_size(char *m);
 
 int				ft_count_tetris(char *file_content);
 
+int				ft_next_possibility(char **map, t_tetri **tabtetri,
+				int *j, int *onemore);
+
+int				ft_map_len(char *map);
 #endif

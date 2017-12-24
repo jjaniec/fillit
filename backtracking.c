@@ -1,135 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptbacktracking.c                                     :+:      :+:    :+:   */
+/*   backtracking.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/23 18:26:34 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 16:12:40 by unicolai         ###   ########.fr       */
+/*   Created: 2017/12/24 16:18:31 by unicolai          #+#    #+#             */
+/*   Updated: 2017/12/24 16:47:27 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
-#include <unistd.h>
-
-#define SUCCESS 0
-#define ERROR 1
-
-int		nbligne(char *map)
-{
-	int		i;
-
-	i = 0;
-	while (map[i] != '\n')
-		i++;
-	i++;
-	return (i);
-}
-
-void	enlargemap(int *j, char **map, int *result)
-{
-	int newnbl;
-	int	i;
-	int	i2;
-
-	newnbl = nbligne(*map) + 1;
-	*j = 0;
-	*result = SUCCESS;
-	free(*map);
-	if (!(*map = malloc(sizeof(**map) * (newnbl * newnbl - newnbl + 1))))
-		exit(EXIT_FAILURE);
-	i = 0;
-	i2 = 0;
-	while (i <= (newnbl - 1)  * (newnbl - 1))
-	{
-		while (i2 < newnbl - 1)
-		{
-			(*map)[i] = '.';
-			i++;
-			i2++;
-		}
-		(*map)[i] = '\n';
-		i2 = 0;
-		i++;
-	}
-	(*map)[i] = '\0';
-}
-
-int		firsthashtag(t_tetri *tabtetri, int j)
-{
-	int	k;
-	int	jprevious;
-
-	k = 0;
-	jprevious = j - 1;
-	while (tabtetri[jprevious].s[k] != '#')
-		k++;
-	return (k);
-}
-
-int		endofmap(char *map, t_tetri *tabtetri, int j)
-{
-	int	i;
-	int	k;
-	int	firststar;
-	int	positionletter;
-	int	endoftetri;
-
-	k = -1;
-	firststar = SUCCESS;;
-	positionletter = 0;
-	endoftetri = ERROR;
-	while (tabtetri[j].s[++k])
-	{
-		if (firststar == SUCCESS)
-		{
-			firststar = ERROR;
-			positionletter = k % 5;
-		}
-	}
-	i = 0;
-	while (map[i])
-		i++;
-	i -= 2;
-	if (map[i - positionletter] == j - 1 + 65)
-		endoftetri = SUCCESS;
-	return (endoftetri);
-}
-
-void	remove_last_tetri(char **map, int *j)
-{
-	int	i;
-
-	i = 0;
-	(*j)--;
-	while ((*map)[i])
-	{
-		if ((*map)[i] == *j + 65)
-			(*map)[i] = '.';
-		i++;
-	}
-}
-int		next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
-{
-	int	result;
-
-	result = ERROR;
-	if (endofmap(*map, *tabtetri, *j) == SUCCESS)//
-	{//
-		(*tabtetri)[*j].decaltetri = 0;//
-		remove_last_tetri(map, j);
-		if (*j != 0)//
-			(*tabtetri)[*j].decaltetri += firsthashtag(*tabtetri, *j);
-	}//
-	remove_last_tetri(map, j);
-	*j >= 0 ? (*tabtetri)[*j].decaltetri++ : 0;
-	*onemore = (*tabtetri)[*j].decaltetri;//
-	if (*j == -1)//
-		enlargemap(j, map, &result);
-	return (result);
-}
 
 int		skip_dot_allready_taken(char *map, int *result, int *onemore)
 {
@@ -158,7 +39,7 @@ int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 	while (tbt[*j].s[++k] != 0 && r == SUCCESS && (*map)[*i] != 0 && star < 4)
 	{
 		if (tbt[*j].s[k] == '#' && tbt[*j].s[k - 1] != '#')
-			marker = (*i % nbligne(*map)) - (k % 5);
+			marker = (*i % ft_map_len(*map)) - (k % 5);
 		if (tbt[*j].s[k] == '#' && (*map)[*i] == '.' && ++star)
 			(*map)[*i] = '*';
 		else if (tbt[*j].s[k] == '#' && (*map)[*i] != '.')
@@ -179,24 +60,14 @@ int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 {
 	int	i;
-	int	firststar;
 	int	nbl;
 
 	i = 0;
-	firststar = SUCCESS;
-	nbl = nbligne(*map);
+	nbl = ft_map_len(*map);
 	while ((*map)[i] != '\0')
 	{
 		if ((*map)[i] == '*' && *result == SUCCESS)
-		{
 			(*map)[i] = *j + 65;
-			if (firststar == SUCCESS)
-			{
-				tabtetri[*j].x = i % nbl;
-				tabtetri[*j].y = i / nbl;
-				firststar = ERROR;
-			}
-		}
 		else if ((*map)[i] == '*' && *result == ERROR)
 			(*map)[i] = '.';
 		i++;
@@ -226,14 +97,13 @@ void	fillmap(char **map, t_tetri *tabtetri)
 			j++;
 		}
 		else if (result == ERROR && (*map)[i] == '\0')
-			result = next_possibility(map, &tabtetri, &j, &onemore);
+			result = ft_next_possibility(map, &tabtetri, &j, &onemore);
 		else
 			onemore++;
 		printf("%s\n", *map);
 		//sleep(1);
 	}
 }
-
 //Quand j'ai un tetri qui rentre pas, je reviens sur le tetri precedent et je le replace en le decalant de un. Je fais ca jusqua ce que le tetri d'apres rentre ou que ce tetri arrive au '\0'. Si le tetri arrive au '\0' je passe au tetri encore d'avant. Si le premier tetri arrive au '\0' j'aggrandi la map.
 
 int		fillit_sqrt(int n)
@@ -271,14 +141,6 @@ int		main()
 	t2.s = "#...\n#...\n##..\n....\n";
 	t3.s = "##..\n##..\n....\n....\n";
 	t4.s = "####\n....\n....\n....\n";
-//	t1.x = -1;
-//	t1.y = -1;
-//	t2.x = -1;
-//	t2.y = -1;
-//	t3.x = -1;
-//	t3.y = -1;
-//	t4.x = -1;
-//	t4.y = -1;
 	t1.decaltetri = 0;
 	t2.decaltetri = 0;
 	t3.decaltetri = 0;
