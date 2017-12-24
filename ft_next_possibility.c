@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 16:19:05 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 16:32:17 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 17:13:20 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	enlargemap(int *j, char **map, int *result)
 	int	i;
 	int	i2;
 
-	newnbl = nbligne(*map) + 1;
+	newnbl = ft_map_len(*map) + 1;
 	*j = 0;
 	*result = SUCCESS;
 	free(*map);

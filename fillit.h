@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/24 16:34:51 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 17:10:05 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,8 @@ int				ft_next_possibility(char **map, t_tetri **tabtetri,
 				int *j, int *onemore);
 
 int				ft_map_len(char *map);
+
+void			ft_fill_map(char **map, t_tetri *tabtetri);
+
+int				ft_fillit_sqrt(int n);
 #endif

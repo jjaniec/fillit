@@ -6,13 +6,13 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 16:18:31 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 16:47:27 by unicolai         ###   ########.fr       */
+/*   Updated: 2017/12/24 17:05:49 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		skip_dot_allready_taken(char *map, int *result, int *onemore)
+static int	ft_skip_dot_allready_taken(char *map, int *result, int *onemore)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int		skip_dot_allready_taken(char *map, int *result, int *onemore)
 	return (i);
 }
 
-int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
+static int	ft_put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 {
 	static int	k = 0;
 	int			marker;
@@ -51,23 +51,31 @@ int		put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 			while (tbt[*j].s[k] != '\n')
 				r = (tbt[*j].s[k++] == '#') ? ERROR : r;
 		(*i)++;
-		printf("%s\n", *map);
-		//sleep(1);
 	}
 	return (r = ((*map)[*i] == '\0' && r == SUCCESS && star != 4) ? ERROR : r);
 }
 
-int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
+static int	ft_change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 {
 	int	i;
+	int	firststar;
 	int	nbl;
 
 	i = 0;
+	firststar = SUCCESS;
 	nbl = ft_map_len(*map);
 	while ((*map)[i] != '\0')
 	{
 		if ((*map)[i] == '*' && *result == SUCCESS)
+		{
 			(*map)[i] = *j + 65;
+			if (firststar == SUCCESS)
+			{
+				tabtetri[*j].x = i % nbl;
+				tabtetri[*j].y = i / nbl;
+				firststar = ERROR;
+			}
+		}
 		else if ((*map)[i] == '*' && *result == ERROR)
 			(*map)[i] = '.';
 		i++;
@@ -75,7 +83,7 @@ int		change_stars(char **map, int *result, int *j, t_tetri *tabtetri)
 	return (i);
 }
 
-void	fillmap(char **map, t_tetri *tabtetri)
+void	ft_fill_map(char **map, t_tetri *tabtetri)
 {
 	int		i;
 	int		j;
@@ -87,9 +95,9 @@ void	fillmap(char **map, t_tetri *tabtetri)
 	result = SUCCESS;
 	while (tabtetri[j].s != NULL)
 	{
-		i = skip_dot_allready_taken(*map, &result, &onemore);
-		result = put_tetri_on_map(tabtetri, &j, map, &i);
-		change_stars(map, &result, &j, tabtetri);
+		i = ft_skip_dot_allready_taken(*map, &result, &onemore);
+		result = ft_put_tetri_on_map(tabtetri, &j, map, &i);
+		ft_change_stars(map, &result, &j, tabtetri);
 		if (result == SUCCESS)
 		{
 			tabtetri[j].decaltetri = onemore;//
@@ -100,89 +108,8 @@ void	fillmap(char **map, t_tetri *tabtetri)
 			result = ft_next_possibility(map, &tabtetri, &j, &onemore);
 		else
 			onemore++;
-		printf("%s\n", *map);
-		//sleep(1);
 	}
 }
+
 //Quand j'ai un tetri qui rentre pas, je reviens sur le tetri precedent et je le replace en le decalant de un. Je fais ca jusqua ce que le tetri d'apres rentre ou que ce tetri arrive au '\0'. Si le tetri arrive au '\0' je passe au tetri encore d'avant. Si le premier tetri arrive au '\0' j'aggrandi la map.
 
-int		fillit_sqrt(int n)
-{
-	int		res;
-
-	res = 1;
-	while (res * res < n)
-		++res;
-	return (res);
-}
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <limits.h>
-#include <string.h>
-#include <ctype.h>
-
-int		main()
-{
-	int		i;
-	int		i2;
-	int		i3;
-	char	*map;
-	t_tetri t1;
-	t_tetri t2;
-	t_tetri t3;
-	t_tetri t4;
-	t_tetri	*tabtetri;
-	int		nbtetri;
-	int		taillemap;
-
-	t1.s = ".#..\n.#..\n##..\n....\n";
-	t2.s = "#...\n#...\n##..\n....\n";
-	t3.s = "##..\n##..\n....\n....\n";
-	t4.s = "####\n....\n....\n....\n";
-	t1.decaltetri = 0;
-	t2.decaltetri = 0;
-	t3.decaltetri = 0;
-	t4.decaltetri = 0;
-	i = -1;
-	i2 = 0;
-	i3 = 0;
-	if (!(tabtetri = (t_tetri *)malloc(sizeof(t_tetri) * 5)))
-		return (0);
-	tabtetri[0] = t1;
-	tabtetri[1] = t2;
-	tabtetri[2] = t3;
-	tabtetri[3] = t4;
-	tabtetri[4].s = NULL;
-	nbtetri = 0;
-	while (tabtetri[++i].s != NULL)
-		nbtetri++;
-	taillemap = fillit_sqrt(nbtetri * 4) * fillit_sqrt(nbtetri * 4) + nbtetri;
-	if (!(map = malloc(sizeof(*map) * (taillemap + 1))))
-		return (0);
-	printf("taillemap: %d\n", taillemap);
-	while (i2 < taillemap)
-	{
-		while (i3 < nbtetri)
-		{
-			map[i2] = '.';
-			i2++;
-			i3++;
-		}
-		map[i2] = '\n';
-		i3 = 0;
-		i2++;
-	}
-	map[i2] = '\0';
-	printf("%s\n", map);
-	fillmap(&map, tabtetri);
-	i = 0;
-	while (tabtetri[i].s != NULL)
-	{
-		printf("tabtetri[%d].x = %d, tabtetri[%d].y = %d\n", i, tabtetri[i].x, i, tabtetri[i].y);
-		i++;
-	}
-	printf("%s\n", map);
-	return (0);
-}
