@@ -27,9 +27,8 @@ int		main(int ac, char **av)
 		return (1);
 	ft_distribute_tetriminos(&tab, s);
 	map = ft_generate_map(ft_fillit_sqrt(ft_count_tetris(s) * 4));
-	printf("%s\n", map);
 	ft_fill_map(&map, tab);
-	printf("%s\n", map);
+	ft_putstr(map);
 	return (0);
 }
 
