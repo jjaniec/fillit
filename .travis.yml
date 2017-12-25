@@ -4,6 +4,6 @@ compiler:
     - gcc
     - clang
 before_install:
-    - git clone git@github.com:jjaniec/Libft.git
+    - git clone https://github.com/jjaniec/Libft.git
     - git clone https://github.com/anisg/fillit_checker.git
 script: make && ./fillit_checker/test.sh $TRAVIS_BUILD_DIR
