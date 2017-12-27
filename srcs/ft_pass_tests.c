@@ -34,7 +34,8 @@ int		ft_pass_tests(char *file_content)
 		t_tmp = ft_parse_tetri(file_content, j);
 		if (
 				ft_errordot(t_tmp) || \
-				ft_errorhashtag(t_tmp)
+				ft_errorhashtag(t_tmp) || \
+				(int)ft_strlen(t_tmp) != 20
 			)
 			r = 1;
 		j++;

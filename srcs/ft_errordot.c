@@ -19,19 +19,15 @@
 int	ft_errordot(char *s)
 {
 	int	i;
+	int 	dot_count;
 
-	i = 0;
-	while (s[i] != '\0')
+	dot_count = 0;
+	i = -1;
+	while (s[++i] != '\0')
 	{
-		while (s[i] != '\n')
-		{
-			if (s[i] != '#' && s[i] != '.')
-				return (1);
-			i++;
-		}
+		dot_count += ((s[i] == '.') ? (1) : (0));
 		if ((i + 1) % 5 == 0 && s[i] != '\n')
 			return (1);
-		i++;
 	}
-	return (0);
+	return ((dot_count == 12) ? (0) : (1));
 }
