@@ -64,4 +64,6 @@ int				ft_pass_tests(char *file_content);
 
 int				ft_print_usage(void);
 
+char 			*ft_strjoin_free(char *s1, char *s2);
+
 #endif

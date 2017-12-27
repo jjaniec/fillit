@@ -29,7 +29,7 @@ int		ft_pass_tests(char *file_content)
 	i = ft_count_tetris(file_content);
 	if (i > 26 || ((int)ft_strlen(file_content) != (20 + (21 * (i - 1)))))
 		r = 1;
-	while (j != i && r != 1)
+	while (j <= i && r != 1)
 	{
 		t_tmp = ft_parse_tetri(file_content, j);
 		if (
@@ -40,6 +40,6 @@ int		ft_pass_tests(char *file_content)
 		j++;
 	}
 	if (r)
-		write(1, "error", 5);
+		write(1, "error\n", 6);
 	return (r);
 }

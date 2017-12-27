@@ -25,7 +25,7 @@ char	*ft_resize_buf(int fd, char *buf, int *bufsize_multiplier, int *wrote)
 	*wrote = read(fd, buf2, (BUFF_SIZE * *bufsize_multiplier));
 	buf2[*wrote] = '\0';
 	*bufsize_multiplier += 1;
-	return (ft_strjoin(buf, buf2));
+	return (ft_strjoin_free(buf, buf2));
 }
 
 /*

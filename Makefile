@@ -25,6 +25,7 @@ SRC_NAME = backtracking.c \
 		   ft_pass_tests.c \
 		   ft_print_usage.c \
 		   ft_read_content.c \
+		   ft_strjoin_free.c \
 		   ft_upleft.c \
 		   main.c
 

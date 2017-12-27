@@ -24,8 +24,8 @@ int		main(int ac, char **av)
 {
 	int		fd;
 	char	*s;
-	t_tetri		*tab;
-	char 	*map;
+	t_tetri	*tab;
+	char	*map;
 
 	if (ac != 2)
 		return (ft_print_usage());
