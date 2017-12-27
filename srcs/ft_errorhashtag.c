@@ -21,33 +21,23 @@ int	ft_errorhashtag(char *s)
 	int	i;
 	int	y;
 
-	i = 0;
+	i = -1;
 	y = 0;
-	while (s[i] != '\0')
-	{
+	while (s[++i] != '\0')
 		if (s[i] == '#')
 			y++;
-		i++;
-	}
 	if (y != 4)
 		return (1);
-	i = 0;
+	i = -1;
 	y = 0;
-	while (s[i])
-	{
+	while (s[++i])
 		if (s[i] == '#')
 		{
-			if (s[i - 1] == '#')
-				y++;
-			if (s[i + 1] == '#')
-				y++;
-			if (s[i - 5] == '#')
-				y++;
-			if (s[i + 5] == '#')
-				y++;
+			s[i - 1] == '#' ? y++ : 0;
+			s[i + 1] == '#' ? y++ : 0;
+			s[i - 5] == '#' ? y++ : 0;
+			s[i + 5] == '#' ? y++ : 0;
 		}
-				i++;
-	}
 	if (y != 6 && y != 8)
 		return (1);
 	return (0);

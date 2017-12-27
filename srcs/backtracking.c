@@ -87,7 +87,7 @@ static int	ft_change_stars(char **map, int *result, int *j)
 	return (i);
 }
 
-void	ft_fill_map(char **map, t_tetri *tabtetri)
+void		ft_fill_map(char **map, t_tetri *tabtetri)
 {
 	int		i;
 	int		j;

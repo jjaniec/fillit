@@ -23,6 +23,12 @@ int	ft_errordot(char *s)
 	i = 0;
 	while (s[i] != '\0')
 	{
+		while (s[i] != '\n')
+		{
+			if (s[i] != '#' && s[i] != '.')
+				return (1);
+			i++;
+		}
 		if ((i + 1) % 5 == 0 && s[i] != '\n')
 			return (1);
 		i++;
