@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Moves tetriminos to the most-left possible
+*/
 
 void	ft_left(char *s, int i, int first)
 {
@@ -31,6 +35,10 @@ void	ft_left(char *s, int i, int first)
 		i++;
 	}
 }
+
+/*
+** Moves tetriminos to the most-up possible
+*/
 
 void	ft_up(char *s, int i, int first)
 {
@@ -53,6 +61,10 @@ void	ft_up(char *s, int i, int first)
 		i++;
 	}
 }
+
+/*
+** Combines ft_up and ft_left
+*/
 
 void	ft_upleft(char *s)
 {

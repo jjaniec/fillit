@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Calculate square root for $n
+*/
 
 int		ft_fillit_sqrt(int n)
 {

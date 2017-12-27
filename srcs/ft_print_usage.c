@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Prints usage of fillit
+*/
 
 int		ft_print_usage(void)
 {

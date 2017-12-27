@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Calculate size of map passed in parameter
+*/
 
 int		ft_map_len(char *map)
 {

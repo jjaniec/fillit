@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+**
+*/
 
 static void	enlargemap(int *j, char **map, int *result)
 {
@@ -41,6 +45,10 @@ static void	enlargemap(int *j, char **map, int *result)
 	(*map)[i] = '\0';
 }
 
+/*
+**
+*/
+
 static int	firsthashtag(t_tetri *tabtetri, int j)
 {
 	int	k;
@@ -52,6 +60,10 @@ static int	firsthashtag(t_tetri *tabtetri, int j)
 		k++;
 	return (k);
 }
+
+/*
+**
+*/
 
 static int	endofmap(char *map, t_tetri *tabtetri, int j)
 {
@@ -82,6 +94,10 @@ static int	endofmap(char *map, t_tetri *tabtetri, int j)
 	return (endoftetri);
 }
 
+/*
+**
+*/
+
 static void	remove_last_tetri(char **map, int *j)
 {
 	int	i;
@@ -95,6 +111,10 @@ static void	remove_last_tetri(char **map, int *j)
 		i++;
 	}
 }
+
+/*
+**
+*/
 
 int		ft_next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
 {

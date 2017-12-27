@@ -10,7 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Main file of fillit project, try it with:
+** make T_COUNT=x && ./fillit map.fillit
+** with x the number of tetriminos you want to create
+**
+** thanks to user dnetto for his map_generator script
+*/
 
 int		main(int ac, char **av)
 {

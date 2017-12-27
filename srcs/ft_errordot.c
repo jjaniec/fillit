@@ -10,6 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fillit.h>
+
+/*
+** Check validity of tetriminos by verifying it's content
+*/
+
 int	ft_errordot(char *s)
 {
 	int	i;

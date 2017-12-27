@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Makes all tests to verify validity of file content and all
+** of it's tetriminos
+*/
 
 int		ft_pass_tests(char *file_content)
 {

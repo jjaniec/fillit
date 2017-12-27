@@ -10,7 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Create a sturct * containing each tetrimminos in t_tetri.s
+** t_tetri.decaltetri is initialized to 0 and will contain the offset of
+** the tetriminos in our map, used for backtracking
+*/
 
 int		ft_distribute_tetriminos(t_tetri **tab, char *s)
 {
@@ -25,7 +31,6 @@ int		ft_distribute_tetriminos(t_tetri **tab, char *s)
 		(*tab)[i].s = ft_parse_tetri(s, i + 1);
 		ft_upleft((*tab)[i].s);
 		(*tab)[i].decaltetri = 0;
-		//printf("Struct %d/%d -> |\n%s|", i, j, (*tab)[i].s);
 	}
 	(*tab)[j].s = NULL;
 	return (0);

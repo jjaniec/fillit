@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Verify validity of tetriminos by checking it's shape
+*/
 
 int	ft_errorhashtag(char *s)
 {

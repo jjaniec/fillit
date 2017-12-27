@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Return count of tetriminos in file descriptor
+*/
 
 int		ft_count_tetris(char *file_content)
 {

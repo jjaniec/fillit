@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+**
+*/
 
 static int	ft_skip_dot_allready_taken(char *map, int *result, int *onemore)
 {
@@ -25,6 +29,10 @@ static int	ft_skip_dot_allready_taken(char *map, int *result, int *onemore)
 		i += *onemore;
 	return (i);
 }
+
+/*
+**
+*/
 
 static int	ft_put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 {

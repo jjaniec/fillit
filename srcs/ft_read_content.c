@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Append to ft_read_content's buffer, following of file descriptor, with a
+** size of ($BUFF_SIZE * $bufsize_multiplier) bytes
+*/
 
 char	*ft_resize_buf(int fd, char *buf, int *bufsize_multiplier, int *wrote)
 {
@@ -23,6 +28,10 @@ char	*ft_resize_buf(int fd, char *buf, int *bufsize_multiplier, int *wrote)
 	return (ft_strjoin(buf, buf2));
 }
 
+/*
+** Read the first $BUFF_SIZE bytes of file descriptor passed in parameter
+** and store it in a malloc'ed char *
+*/
 
 char	*ft_read_content(int fd)
 {

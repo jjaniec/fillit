@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <fillit.h>
+
+/*
+** Return tetri number $nb contained in $s, only works if length of
+** tetriminos is valid
+*/
 
 char	*ft_parse_tetri(char *s, int nb)
 {
