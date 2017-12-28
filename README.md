@@ -1,12 +1,12 @@
-# Fillit [![Build Status](https://travis-ci.org/UgoNic/fillit.svg?branch=master)](https://travis-ci.org/UgoNic/fillit)
+# Fillit  [![Build Status](https://travis-ci.org/UgoNic/fillit.svg?branch=master)](https://travis-ci.org/UgoNic/fillit)
 
-# What's fillit ?
+## What's fillit ?
 
-see [subject.en.pdf](https://github.com/UgoNic/fillit/fillit.en.pdf) or [subject.fr.pdf](https://github.com/UgoNic/fillit/fillit.fr.pdf)
+see [subject.en.pdf](https://github.com/UgoNic/fillit/blob/master/fillit.en.pdf) or [subject.fr.pdf](https://github.com/UgoNic/fillit/blob/master/fillit.fr.pdf)
 
 >Fillit is a project that let you discover and/or familiarize yourself with a recurring problematic in programming: searching the optimal solution among a huge set of possibilities, in a respectable timing. In this particular project, you will have to find a way to assemble a given Tetriminos set altogether in the smallest possible square.
 
-# Usage
+## Usage
 
 You can try our project with the following commands:
 
@@ -27,7 +27,7 @@ finally, run fillit with your file
 
     ./fillit map.fillit
 
-# Example
+## Example
 
 
     user% make map
