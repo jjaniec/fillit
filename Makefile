@@ -46,7 +46,7 @@ all : $(NAME)
 
 .PHONY : all clean map
 
-$(NAME) : $(OBJ) map
+$(NAME) : $(OBJ)
 	make -C ./libft/
 	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
 
