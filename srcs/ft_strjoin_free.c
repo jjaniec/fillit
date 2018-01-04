@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/27 18:16:34 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/27 18:33:15 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/04 14:35:47 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 ** Return the Concatenation of 2 strings and free them to avoid memory leaks
 */
 
-char 	*ft_strjoin_free(char *s1, char *s2)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	char 	*t;
-	unsigned int 	l;
-	int 	i;
-	int 	j;
+	char			*t;
+	unsigned int	l;
+	int				i;
+	int				j;
 
 	i = -1;
 	j = 0;

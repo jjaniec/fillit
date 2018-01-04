@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/24 17:10:05 by unicolai         ###   ########.fr       */
+/*   Updated: 2018/01/04 14:36:52 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ int				ft_pass_tests(char *file_content);
 
 int				ft_print_usage(void);
 
-char 			*ft_strjoin_free(char *s1, char *s2);
+char			*ft_strjoin_free(char *s1, char *s2);
 
 #endif

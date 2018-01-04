@@ -6,14 +6,14 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 16:19:05 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 17:13:20 by unicolai         ###   ########.fr       */
+/*   Updated: 2018/01/04 15:53:40 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fillit.h>
 
 /*
-**
+** Enlarge the map
 */
 
 static void	enlargemap(int *j, char **map, int *result)
@@ -46,7 +46,7 @@ static void	enlargemap(int *j, char **map, int *result)
 }
 
 /*
-**
+** Return the location of the first hashtag
 */
 
 static int	firsthashtag(t_tetri *tabtetri, int j)
@@ -62,7 +62,7 @@ static int	firsthashtag(t_tetri *tabtetri, int j)
 }
 
 /*
-**
+** Check if the tetri is at the end of the map
 */
 
 static int	endofmap(char *map, t_tetri *tabtetri, int j)
@@ -95,7 +95,7 @@ static int	endofmap(char *map, t_tetri *tabtetri, int j)
 }
 
 /*
-**
+** Remove the last tetri laid
 */
 
 static void	remove_last_tetri(char **map, int *j)
@@ -113,10 +113,11 @@ static void	remove_last_tetri(char **map, int *j)
 }
 
 /*
-**
+** Check the next possibility
 */
 
-int		ft_next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
+int			ft_next_possibility(char **map, t_tetri **tabtetri, int *j, \
+		int *onemore)
 {
 	int	result;
 

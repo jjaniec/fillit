@@ -6,14 +6,14 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 16:18:31 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 17:05:49 by unicolai         ###   ########.fr       */
+/*   Updated: 2018/01/04 15:48:22 by unicolai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fillit.h>
 
 /*
-**
+** Put the counter on the first dot of the map
 */
 
 static int	ft_skip_dot_allready_taken(char *map, int *result, int *onemore)
@@ -31,7 +31,7 @@ static int	ft_skip_dot_allready_taken(char *map, int *result, int *onemore)
 }
 
 /*
-**
+** If can put 4 stars on the map, return SUCCESS, otherwise return ERROR
 */
 
 static int	ft_put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
@@ -64,7 +64,8 @@ static int	ft_put_tetri_on_map(t_tetri *tbt, int *j, char **map, int *i)
 }
 
 /*
-**
+** Replace stars by letter if result equal SUCCESS or
+** replace stars by dot if result equal ERROR
 */
 
 static int	ft_change_stars(char **map, int *result, int *j)
@@ -92,7 +93,7 @@ static int	ft_change_stars(char **map, int *result, int *j)
 }
 
 /*
-**
+** Fill the map
 */
 
 void		ft_fill_map(char **map, t_tetri *tabtetri)

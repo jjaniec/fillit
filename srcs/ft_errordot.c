@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:10:04 by unicolai          #+#    #+#             */
-/*   Updated: 2017/11/29 18:35:15 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/04 14:21:01 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	ft_errordot(char *s)
 {
 	int	i;
-	int 	dot_count;
+	int	dot_count;
 
 	dot_count = 0;
 	i = -1;
