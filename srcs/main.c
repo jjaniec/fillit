@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 23:09:37 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/20 20:02:37 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/04 14:34:57 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 ** Main file of fillit project, try it with:
 ** make T_COUNT=x && ./fillit map.fillit
 ** with x the number of tetriminos you want to create
-**
-** thanks to user dnetto for his map_generator script
 */
 
 int		main(int ac, char **av)
@@ -39,4 +37,3 @@ int		main(int ac, char **av)
 	ft_putstr(map);
 	return (0);
 }
-

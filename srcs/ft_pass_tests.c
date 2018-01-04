@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 19:24:17 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 19:52:51 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/04 14:29:14 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int		ft_pass_tests(char *file_content)
 		if (
 				ft_errordot(t_tmp) || \
 				ft_errorhashtag(t_tmp) || \
-				(int)ft_strlen(t_tmp) != 20
-			)
+				(int)ft_strlen(t_tmp) != 20)
 			r = 1;
 		j++;
 	}

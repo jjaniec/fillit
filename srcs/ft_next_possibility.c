@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/24 16:19:05 by unicolai          #+#    #+#             */
-/*   Updated: 2017/12/24 17:13:20 by unicolai         ###   ########.fr       */
+/*   Updated: 2018/01/04 14:32:48 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ static void	remove_last_tetri(char **map, int *j)
 **
 */
 
-int		ft_next_possibility(char **map, t_tetri **tabtetri, int *j, int *onemore)
+int			ft_next_possibility(char **map, t_tetri **tabtetri, int *j, \
+		int *onemore)
 {
 	int	result;
 
