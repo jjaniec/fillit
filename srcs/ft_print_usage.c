@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 19:58:44 by jjaniec           #+#    #+#             */
-/*   Updated: 2017/12/20 20:02:06 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/05 20:55:55 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 ** Prints usage of fillit
 */
 
-int		ft_print_usage(void)
+int		ft_print_usage(char *pname)
 {
-	write(1, "Usage: ./fillit \"filepath\"", 27);
+	ft_putstr("usage: ");
+	ft_putstr(pname);
+	ft_putstr(" [file]\n");
 	return (1);
 }

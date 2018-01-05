@@ -6,7 +6,7 @@
 /*   By: unicolai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 23:09:37 by unicolai          #+#    #+#             */
-/*   Updated: 2018/01/04 14:34:57 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/05 20:56:28 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int ac, char **av)
 	char	*map;
 
 	if (ac != 2)
-		return (ft_print_usage());
+		return (ft_print_usage(av[0]));
 	fd = open(av[1], O_RDONLY);
 	s = ft_read_content(fd);
 	if (ft_pass_tests(s))

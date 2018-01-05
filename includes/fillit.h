@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2018/01/04 14:36:52 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/05 20:54:56 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				ft_fillit_sqrt(int n);
 
 int				ft_pass_tests(char *file_content);
 
-int				ft_print_usage(void);
+int				ft_print_usage(char *pname);
 
 char			*ft_strjoin_free(char *s1, char *s2);
 
