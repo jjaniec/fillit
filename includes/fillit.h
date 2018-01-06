@@ -6,7 +6,7 @@
 /*   By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:14:22 by jjaniec           #+#    #+#             */
-/*   Updated: 2018/01/05 20:54:56 by jjaniec          ###   ########.fr       */
+/*   Updated: 2018/01/06 13:44:01 by jjaniec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 # include <strings.h>
 # include "../libft/libft.h"
 
-# define BUFF_SIZE 21
 # define SUCCESS 0
 # define ERROR 1
+# ifndef BUFF_SIZE
+#  define BUFF_SIZE 42
+# endif
 
 typedef struct	s_tetri
 {
