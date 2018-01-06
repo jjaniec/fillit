@@ -72,11 +72,9 @@ static int	ft_change_stars(char **map, int *result, int *j)
 {
 	int	i;
 	int	firststar;
-	int	nbl;
 
 	i = 0;
 	firststar = SUCCESS;
-	nbl = ft_map_len(*map);
 	while ((*map)[i] != '\0')
 	{
 		if ((*map)[i] == '*' && *result == SUCCESS)
