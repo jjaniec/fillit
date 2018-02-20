@@ -8,24 +8,38 @@ see [subject.en.pdf](https://github.com/jjaniec/fillit/blob/master/fillit.en.pdf
 
 ## Usage
 
+### Trying it with Docker
+
+```bash
+docker run -it jjaniec/fillit
+```
+
+### Manual Installation
+
 You can try our project with the following commands:
 
 First, clone the repository and it's dependencies to create the executable
 
-    git clone https://github.com/jjaniec/fillit
-    cd fillit
-    git clone https://github.com/jjaniec/libft
-    make
+```bash
+git clone https://github.com/jjaniec/fillit
+cd fillit
+git clone https://github.com/jjaniec/libft
+make
+```
 
 then, create a file containing tetriminos
 
-    make map T_COUNT=x
+```bash
+make map T_COUNT=x
+```
 
 >with x, number of tetriminos to create in the file "map.fillit", 5 by default
 
 finally, run fillit with your file
 
-    ./fillit map.fillit
+```bash
+./fillit map.fillit
+```
 
 ## Example
 
