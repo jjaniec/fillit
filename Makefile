@@ -57,6 +57,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 
 map:
 	./map_generator $(T_COUNT)
+	cat map.fillit
 
 clean:
 	rm -f $(OBJ)
