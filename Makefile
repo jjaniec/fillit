@@ -39,6 +39,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I./libft -I./$(INCLUDES_DIR)
 LFLAGS = -L./libft/ -lft
+LIBFT = ./libft/libft.*
 
 T_COUNT = 5
 
@@ -48,7 +49,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make -C ./libft/
-	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
+	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME) $(LIBFT)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
