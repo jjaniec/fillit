@@ -6,7 +6,7 @@
 #    By: jjaniec <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/20 20:31:14 by jjaniec           #+#    #+#              #
-#    Updated: 2017/12/20 20:38:13 by jjaniec          ###   ########.fr        #
+#    Updated: 2018/02/20 18:22:42 by jjaniec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I./libft -I./$(INCLUDES_DIR)
 LFLAGS = -L./libft/ -lft
-LIBFT = ./libft/libft.*
+
+UNAME_S := $(shell uname -s)
 
 T_COUNT = 5
 
@@ -49,7 +50,12 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make -C ./libft/
-	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME) $(LIBFT)
+ifeq ($(UNAME_S),Linux)
+	gcc $(CFLAGS) $(LFLAGS) $(OBJ) ./libft/libft.* -o $(NAME)
+endif
+ifeq ($(UNAME_S),Darwin)
+	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
+endif
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
