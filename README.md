@@ -1,4 +1,4 @@
-# Fillit  [![Build Status](https://travis-ci.org/UgoNic/fillit.svg?branch=master)](https://travis-ci.org/UgoNic/fillit)
+# Fillit  [![Build Status](https://travis-ci.org/UgoNic/fillit.svg?branch=master)](https://travis-ci.org/UgoNic/fillit) [![Docker Automated build](https://img.shields.io/docker/automated/jjaniec/fillit.svg)](https://hub.docker.com/r/jjaniec/fillit/) [![Docker Build Status](https://img.shields.io/docker/build/jjaniec/fillit.svg)](https://hub.docker.com/r/jjaniec/fillit/)
 
 ## What's fillit ?
 
