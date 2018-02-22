@@ -39,6 +39,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC_NAME:.c=.o))
 CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I./libft -I./$(INCLUDES_DIR)
 LFLAGS = -L./libft/ -lft
+LINUXFLAGS = -fPIC -std=c99 -Wno-pointer-arith
 
 UNAME_S := $(shell uname -s)
 
@@ -51,7 +52,7 @@ all : $(NAME)
 $(NAME) : $(OBJ)
 	make -C ./libft/
 ifeq ($(UNAME_S),Linux)
-	gcc $(CFLAGS) $(LFLAGS) $(OBJ) ./libft/libft.* -o $(NAME)
+	gcc $(CFLAGS) $(LFLAGS) $(LINUXFLAGS) $(OBJ) ./libft/libft.* -o $(NAME)
 endif
 ifeq ($(UNAME_S),Darwin)
 	gcc $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME)
