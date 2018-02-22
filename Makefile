@@ -60,7 +60,13 @@ endif
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
+ifeq ($(UNAME_S),Linux)
+	gcc $(CFLAGS) $(LINUXFLAGS) -c $(IFLAGS) $^ -o $@
+endif
+ifeq ($(UNAME_S),Darwin)
 	gcc $(CFLAGS) -c $(IFLAGS) $^ -o $@
+endif
+
 
 map:
 	./map_generator $(T_COUNT)
